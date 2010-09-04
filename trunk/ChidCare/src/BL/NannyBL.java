@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
  */
 public class NannyBL {
 
-    private int a;
     private String sql;
     private MyConnection connec;
     private ResultSet Result;
