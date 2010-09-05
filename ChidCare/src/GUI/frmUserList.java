@@ -12,6 +12,7 @@ package GUI;
 
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
+import DAL.ResulSetTableModel;
 
 /**
  *
@@ -50,14 +51,14 @@ public class frmUserList extends javax.swing.JPanel {
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "------- Search -------", "FullName", "StartDate" }));
         cbSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSortActionPerformed(evt);
             }
         });
 
-        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Search --", "FullName", "StartDate", "Account" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -267,13 +268,20 @@ public class frmUserList extends javax.swing.JPanel {
                 // TODO add your handling code here:
             }
         } else if (evt.equals("Sort")) {
-            // TODO add your handling code here:
-//            if ((tbNannyList.getSelectedRow()) != -1) {
-//                // TODO add your handling code here:
-//            } else {
-//                CreateWarningDialog("Please select activite you want view !", "Warning - Child Care");
-//            }
+           if(cbSort.getSelectedIndex() == 1){
+                String sql ="spSortNameOfUsertbl_User";
+                load(sql);
+           }
+           if(cbSort.getSelectedIndex() == 2){
+                String sql ="spSortStartDatetbl_User";
+                load(sql);
+           }
         }
+    }
+    public void load(String sql){
+        ResulSetTableModel T = new ResulSetTableModel();
+        T.setQuery(sql);
+        tbUser.setModel(T);
     }
 
     private void CreateWarningDialog(String info, String title) {

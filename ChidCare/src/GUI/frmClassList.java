@@ -13,6 +13,8 @@ package GUI;
 import GUI.Component.RightPanel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import DAL.ResulSetTableModel;
+import DAL.CheckValid;
 
 /**
  *
@@ -54,14 +56,14 @@ public class frmClassList extends javax.swing.JPanel {
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---------------- Select ------------", "ClassName" }));
         cbSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSortActionPerformed(evt);
             }
         });
 
-        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "ClassName" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -260,17 +262,26 @@ public class frmClassList extends javax.swing.JPanel {
             // TODO add your handling code here:
             if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            } else {
+            } else if(cbSearch.getSelectedIndex() == 0) {
                 // TODO add your handling code here:
+               CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+
+            }
+            else {
+                String sql ="spSearchClassNametbl_Class '"+txtSearch.getText()+"'";
+                load(sql);
             }
         } else if (evt.equals("Sort")) {
-            // TODO add your handling code here:
-//            if ((tbNannyList.getSelectedRow()) != -1) {
-//                // TODO add your handling code here:
-//            } else {
-//                CreateWarningDialog("Please select activite you want view !", "Warning - Child Care");
-//            }
+            if(cbSort.getSelectedIndex() == 1){
+                String sql ="spSortClassNametbl_Class";
+                load(sql);
+            }
         }
+    }
+    public void load(String sql){
+        ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setQuery(sql);
+        tbClasslist.setModel(rm);
     }
 
     private void CreateWarningDialog(String info, String title) {

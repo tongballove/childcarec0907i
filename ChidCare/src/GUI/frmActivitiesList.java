@@ -12,6 +12,8 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import DAL.ResulSetTableModel;
+import DAL.CheckValid;
 
 /**
  *
@@ -21,6 +23,7 @@ public class frmActivitiesList extends javax.swing.JPanel {
 
     private JFrame parent;
     private frmAddOrEditActivite activite;
+       
 
     /** Creates new form frmChildList */
     public frmActivitiesList(JFrame Parent) {
@@ -51,9 +54,14 @@ public class frmActivitiesList extends javax.swing.JPanel {
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "------------------ Select --------------", "NameActive" }));
+        cbSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSortActionPerformed(evt);
+            }
+        });
 
-        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "NameActive" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -219,6 +227,16 @@ public class frmActivitiesList extends javax.swing.JPanel {
         Event("Delete");
     }//GEN-LAST:event_btDeleteActionPerformed
 
+    private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
+        // TODO add your handling code here:
+        if(cbSort.getSelectedIndex() == 1){
+            String sql ="spSortNameActivetbl_Activities";
+            load(sql);
+            
+        }
+
+    }//GEN-LAST:event_cbSortActionPerformed
+
     private void Event(String evt) {
         if (evt.equals("Delete")) {
             if ((tbActivities.getSelectedRow()) != -1) {
@@ -243,11 +261,33 @@ public class frmActivitiesList extends javax.swing.JPanel {
             activite = new frmAddOrEditActivite(parent, true, "Add Activite - Child Care", "Add of Activite");
             activite.setCenterScreen();
             activite.setVisible(true);
-        } else {
+        }
+        else if(evt.equals ("Search")){
+            CheckValid T = new CheckValid();
+            if(cbSearch.getSelectedIndex() == 0){
+              CreateWarningDialog("Please select activite you want Search ","Null Select");
+            }
+            else if(!T.isempy(txtSearch.getText())){
+                CreateWarningDialog("Please Enter Name to Search ","Null Tex");
+                CreateWarningDialog(evt, evt);
+                txtSearch.requestFocus();
+            }
+            else{
+                String sql ="spSearchNameActivetbl_Activities '"+txtSearch.getText()+"'";
+                load(sql);
+            }
+        }
+
+        else {
             // TODO add your handling code here:
         }
     }
 
+    public void load(String sql){
+        ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setQuery(sql);
+        tbActivities.setModel(rm);
+    }
     private void CreateWarningDialog(String info, String title) {
         JOptionPane.showMessageDialog(this, info, title, JOptionPane.WARNING_MESSAGE);
     }

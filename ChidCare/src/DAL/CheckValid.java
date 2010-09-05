@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.*;
 
 
 /**
@@ -36,6 +37,34 @@ public class CheckValid {
         rs = connec.ExecuteSQLResult(sSql);
         //return (Connec.CountRow(rs)==0)? false:true;
         return rs;
+    }
+    public static boolean isempy(String values){
+        if(values.trim().length() == 0 ){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    public static boolean  CheckNumber(String value){
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(value);
+        if(!m.find()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    public static  boolean  checkDate(String values){
+         Pattern p = Pattern.compile("^\\d+[/]\\d+[/]\\d{4}$");
+        Matcher m = p.matcher(values);
+        if(!m.find()){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 }

@@ -13,6 +13,9 @@ package GUI;
 import DAL.ResulSetTableModel;
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
+import DAL.ResulSetTableModel;
+import DAL.CheckValid;
+
 
 /**
  *
@@ -55,9 +58,14 @@ public class frmChildList extends javax.swing.JPanel {
         btDelete = new javax.swing.JButton();
         btViewDetails = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--------- Select --------", "FirstName", "RegistrationDate", "DateReceived" }));
+        cbSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSortActionPerformed(evt);
+            }
+        });
 
-        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "GroupAgeCode", "FirstName", "ParentName", "RegistrationDate", "DateReceived" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -109,7 +117,10 @@ public class frmChildList extends javax.swing.JPanel {
         plTable.setLayout(plTableLayout);
         plTableLayout.setHorizontalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plTableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+                .addContainerGap())
         );
         plTableLayout.setVerticalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,6 +239,22 @@ public class frmChildList extends javax.swing.JPanel {
         // TODO add your handling code here:
         Event("Delete");
     }//GEN-LAST:event_btDeleteActionPerformed
+
+    private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
+        // TODO add your handling code here:
+        if(cbSort.getSelectedIndex() == 1){
+            String sql =" spSortFirstNametbl_Child";
+            load(sql);
+        }
+        if(cbSort.getSelectedIndex() == 2){
+            String sql ="spSortRegistrationDatetbl_Child";
+            load(sql);
+        }
+        if(cbSort.getSelectedIndex() == 3){
+            String sql ="spSortDateReceivedtbl_Child";
+            load(sql);
+        }
+    }//GEN-LAST:event_cbSortActionPerformed
     private void Event(String evt) {
         if (evt.equals("Delete")) {
             if ((tbChildList.getSelectedRow()) != -1) {
@@ -262,10 +289,57 @@ public class frmChildList extends javax.swing.JPanel {
             rightpanel.addSubPane("Add Children");
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
+            CheckValid T = new CheckValid();
             if((txtSearch.getText().equals("")) || (txtSearch.getText() == null) ){
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            }else{
+                txtSearch.requestFocus();
+            }
+            else if(cbSearch.getSelectedIndex() == 0){
+                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+            }
+            else if(cbSearch.getSelectedIndex() == 1){
                  // TODO add your handling code here:
+             
+                if(!T.CheckNumber(txtSearch.getText())){
+                     CreateWarningDialog("Please Enter is Number ","Check - Child Care");
+                     txtSearch.requestFocus();
+                     return;
+                }
+                else{
+                    String sql ="spSearchGroupAgeCodetbl_Child '"+ txtSearch.getText()+"'";
+                    load(sql);
+                }
+
+            }
+            else if(cbSearch.getSelectedIndex() == 2){
+                 String sql ="spSearchFirstNametbl_Child '"+txtSearch.getText()+"'";
+                 load(sql);
+            }
+            else if(cbSearch.getSelectedIndex() == 3){
+                String sql ="spSearchParentNametbl_Child '"+txtSearch.getText()+"'";
+                load(sql);
+            }
+            else if(cbSearch.getSelectedIndex() == 4){
+                if(!T.checkDate(txtSearch.getText())){
+                     CreateWarningDialog("Please Enter Fomat Datetime mm/dd/yy","");
+                     txtSearch.requestFocus();
+                     return;
+                }
+                else{
+                    String sql ="spSearchRegistrationDatetbl_Child '"+txtSearch.getText()+"'";
+                    load(sql);
+                }
+            }
+            else if(cbSearch.getSelectedIndex() == 5){
+                if(!T.checkDate(txtSearch.getText())){
+                    CreateWarningDialog("Please Enter Fomat Datetime mm/dd/yy","");
+                     txtSearch.requestFocus();
+                     return;
+                }
+                else {
+                    String sql ="spSearchDateReceivedtbl_Child '"+txtSearch.getText()+"'";
+                    load(sql);
+                }
             }
         } else if (evt.equals("View")) {
             // TODO add your handling code here:
@@ -290,7 +364,11 @@ public class frmChildList extends javax.swing.JPanel {
         rtm.setQuery("Execute spGetParttbl_Child");
         tbChildList.setModel(rtm);
     }
-
+    public void load(String sql){
+        ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setQuery(sql);
+        tbChildList.setModel(rtm);
+    }
     private void CreateWarningDialog(String info, String title) {
         JOptionPane.showMessageDialog(this, info, title, JOptionPane.WARNING_MESSAGE);
     }

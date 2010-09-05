@@ -267,7 +267,7 @@ public class frmLogin extends javax.swing.JDialog {
                 cnn = new MyConnection();
                 if (cnn != null) {
                     //creating a string to store the command T-SQL:
-                    String strSql = "spGetNameLogin '"+ username +"', '123456'";
+                    String strSql = "spGetLogin '"+ username +"', '123456'";
 
                     rs = cnn.ExecuteSQLResult(strSql);
 
