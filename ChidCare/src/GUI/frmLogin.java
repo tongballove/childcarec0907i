@@ -1,5 +1,6 @@
 package GUI;
 
+import BL.LoginBL;
 import DAL.MyConnection;
 import GUI.Component.MD5Password;
 import Images.ImageHelper;
@@ -7,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
@@ -38,6 +38,7 @@ public class frmLogin extends javax.swing.JDialog {
     private String username;
     private String spassword;
     private String password;
+    private LoginBL loginbl;
 
     /** Creates new form frmLogin */
     public frmLogin(JFrame parent, boolean modal) {
@@ -265,11 +266,8 @@ public class frmLogin extends javax.swing.JDialog {
                 ResultSet rs = null;
                 cnn = new MyConnection();
                 if (cnn != null) {
-                    //creating a string to store the command T-SQL:
-                    String strSql = "Execute spGetLogin '"+ username +"', '123456'";
-
-                    rs = cnn.ExecuteSQLResult(strSql);
-
+                    loginbl = new LoginBL(username, "123456");
+                    rs = loginbl.getResult();
                     if (rs.next()) {
                         this.setVisible(false);
                         frmMainFrame mn = new frmMainFrame(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));

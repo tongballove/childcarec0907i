@@ -23,6 +23,7 @@ public class frmChildList extends javax.swing.JPanel {
 
     private ResulSetTableModel rtm;
     private RightPanel rightpanel;
+    private frmViewChild viewChild;
 
     /** Creates new form frmChildList */
     public frmChildList(RightPanel rightPanel) {
@@ -195,35 +196,38 @@ public class frmChildList extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(plSearchAndSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 511, Short.MAX_VALUE)
-                .addComponent(plButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 508, Short.MAX_VALUE)
+                .addComponent(plButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(59, 59, 59)
                     .addComponent(plTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(56, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
         // TODO add your handling code here:
         Event("Search");
+        getDataSource();
 }//GEN-LAST:event_btSearchActionPerformed
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         Event("Add");
+        getDataSource();
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         // TODO add your handling code here:
         Event("Edit");
+        getDataSource();
     }//GEN-LAST:event_btEditActionPerformed
 
     private void btViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btViewDetailsActionPerformed
         // TODO add your handling code here:
         Event("View");
+        getDataSource();
     }//GEN-LAST:event_btViewDetailsActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
@@ -278,7 +282,9 @@ public class frmChildList extends javax.swing.JPanel {
         } else if (evt.equals("View")) {
             // TODO add your handling code here:
             if ((tbChildList.getSelectedRow()) != -1) {
-                // TODO add your handling code here:
+                ChildCode = Integer.parseInt(tbChildList.getValueAt(tbChildList.getSelectedRow(), 0).toString());
+                viewChild = new frmViewChild(null, true, ChildCode);
+                viewChild.setVisible(true);
             } else {
                 CreateWarningDialog("Please select activite you want view !", "Warning - Child Care");
             }
