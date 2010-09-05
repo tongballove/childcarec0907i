@@ -12,6 +12,8 @@
 package GUI;
 
 import DAL.ResulSetTableModel;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +34,8 @@ public class frmSelectChild extends javax.swing.JDialog {
         rtm.setHostURL();
         rtm.setQuery("Execute spGetAllChild " + GroupAgeCode);
         initComponents();
+        Dimension ds = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((ds.width - this.getWidth()) / 2, (ds.height - this.getHeight()) / 2);
     }
 
     /** This method is called from within the constructor to

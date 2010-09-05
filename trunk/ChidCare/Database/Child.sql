@@ -2,18 +2,10 @@ CREATE DATABASE ChildCareC0907I
 GO
 use ChildCareC0907I
 GO
-CREATE TABLE tbl_Function(
-	FunctionCode int primary key identity(1,1)NOT NULL,
-	FunctionName nvarchar(30) NOT NULL,
-	Status Bit  NULL DEFAULT 1
-)
 
---insert into tbl_Function values ('Admin',1)
-Go
-GO
 CREATE TABLE tbl_Users(
 	UserCode int primary key identity(1,1) NOT NULL, 
-	FunctionCode int foreign key references tbl_Function(FunctionCode) ,
+	[Admin] bit,
 	FullName nvarchar(100) NOT NULL,---/---
 	Account Varchar(100),---
 	[Password] nvarchar(100),
@@ -26,7 +18,7 @@ CREATE TABLE tbl_Users(
 	FeedBack nvarchar(100),
 	Status Bit NULL DEFAULT 1,
 )
---insert into tbl_Users values (1,'To Kim Dai','Admin','123456',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
+--insert into tbl_Users values (1,1,'To Kim Dai','Admin','123456',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
 --select * from tbl_Users
 GO
 
@@ -91,16 +83,6 @@ CREATE TABLE tbl_Nanny(
 	Status Bit NULL DEFAULT 1,
 )
 GO
-CREATE TABLE tbl_Child_Nanny(
-	
-	ChildCode int foreign key references tbl_Child(ChildCode)NOT NULL ,
-	NannyCode int foreign key references tbl_Nanny(NannyCode)NOT NULL,
-	ChildNanyCode int identity(1,1),
-	Status Bit NULL DEFAULT 1,
-	primary key (ChildCode,NannyCode),
-	
-)
-GO
 CREATE TABLE tbl_Activities(
 	ActiveCode int primary key identity(1,1),
 	NameActive Nvarchar(50),----/---
@@ -125,46 +107,10 @@ CREATE PROC spGetNameLogin
 	@UserName nvarchar(30),
 	@Pass nvarchar(30)
 AS
-	select a.FunctionCode ,b.FullName from tbl_Users b
-	inner join  tbl_Function a  on b.FunctionCode = a.FunctionCode
-	where b.Account = @UserName and b.Password = @Pass and a.Status =1   
+	select FullName, [Admin] from tbl_Users where Account = @UserName and Password = @Pass and Status =1   
 --execute spGetNameLogin 'Admin','123456'
 GO
 
------------------- CREATE PROC Table tbl_Function -------------------------------------------
-
-GO
------------------- CREATE PROC spInserttbl_Function -------------------
-CREATE PROC spInserttbl_Function
-	@FunctionName nvarchar(30)
-	
-AS 
-	insert into tbl_Function (FunctionName)values (@FunctionName)
-
-GO
------------------- CREATE PROC spGetAlltbl_Function -------------------
-CREATE PROC spGetAlltbl_Function
-AS
-	select FunctionCode, FunctionName from tbl_Function where Status = 1
-
-GO
-------------------CREATE PROC spUpdateTbl_Function--------------
-CREATE PROC spUpdatetbl_Functions
-	@FunctionCode int,
-	@FunctionName nvarchar(30)
-AS
-	update tbl_Function set FunctionName = @FunctionName 
-	where FunctionCode = @FunctionCode
-GO
------------CREATE PROC spDeleteTbl_Function--------------
-CREATE PROC spDeletetbl_Function
-	 @FunctionCode int,
-	 @Status Bit
-As
-	update  tbl_Function set Status = @Status where 
-	FunctionCode = @FunctionCode
-
-GO
 ----------------- CREATE PROC Table tbl_User -----------------------------------------------
 ------- CREATE PROC spGetUserCodetbl_User ------------------
 CREATE PROC spGetUserCode
@@ -186,9 +132,8 @@ CREATE PROC  spGetLogin
 	@UserName nvarchar(30),
 	@Pass nvarchar(30)
 AS	
-	select FullName, Account, Phone, Email, [Address], a.FunctionName from tbl_Users b
-	inner join  tbl_Function a  on b.FunctionCode = a.FunctionCode
-	where b.Account = @UserName and b.Password = @Pass and a.Status =1
+	select FullName, Account, Phone, Email, [Address] from tbl_Users
+	where Account = @UserName and Password = @Pass and Status =1
 --execute spGetLogin 'Admin','123456'
 Go
 -- --NameofUser,Sex,Address,Birthday,Phone,Email,StartDate,Feedback
@@ -197,7 +142,7 @@ CREATE PROC  spGetAllUsers
 
 AS	
 	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,FunctionCode from tbl_Users where Status =1
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where Status =1
 
 GO
 --------- CREATE PROC spInserttbl_User ---------------
@@ -216,10 +161,10 @@ CREATE PROC spInserttbl_Users
 	@FunctionCode int
 	
 AS
-	insert into  tbl_Users (FullName,Account,Password,Sex,Address,Birthday,Phone,Email,StartDate,Feedback,FunctionCode)
+	insert into  tbl_Users (FullName,Account,Password,Sex,Address,Birthday,Phone,Email,StartDate,Feedback)
 	values (
 	@FullName,@Account,
-	@Password,@Sex,@Address,@Birthday,@Phone,@Email,@StartDate,@Feedback,@FunctionCode)
+	@Password,@Sex,@Address,@Birthday,@Phone,@Email,@StartDate,@Feedback)
 
 GO
 -------	CREATE PROC spUpdateTbl_User ----------------
@@ -240,7 +185,7 @@ CREATE PROC spUpdateTbl_Users
 	
 AS
 	update tbl_Users
-	set FullName = @FullName ,Sex = @Sex,Address = @Address,Birthday = @Birthday,Phone = @Phone,Email = @Email,StartDate = @StartDate, Feedback  = @Feedback ,FunctionCode= @FunctionCode
+	set FullName = @FullName ,Sex = @Sex,Address = @Address,Birthday = @Birthday,Phone = @Phone,Email = @Email,StartDate = @StartDate, Feedback  = @Feedback 
 	where UserCode = @UserCode
 GO		
 -------	CREATE PROC spDeleteTbl_User ---------------------------
@@ -261,7 +206,7 @@ GO
 -------- CREATE PROC spGetAllTbl_AgeGroup ----------
 
 GO
-CREATE PROC spGetAllTbl_AgeGroup
+CREATE PROC spGetAlltbl_AgeGroup
 AS
 	select GroupAgeCode,AgeGroup,ChargePerGroup from tbl_AgeGroup 
 	where Status = 1
@@ -457,38 +402,6 @@ AS
 	update tbl_Nanny set Status = 0
 	where NannyCode = @NannyCode
 	
--------------- CREATE PROC Table Table tbl_Child_Nanny -----------------------------------------------------------
-GO
---- CREATE PROC spGetAlltbl_Child_Nanny ----------------
-CREATE PROC spGetAlltbl_Child_Nanny
-AS
-	select ChildNanyCode,ChildCode,NannyCode from tbl_Child_Nanny where Status = 1
-GO
-
----CREATE PROC spInserttbl_Child_Nanny ----------------
-CREATE PROC spInserttbl_Child_Nanny
-	@ChildCode int,
-	@NannyCode int
-AS
-	insert into tbl_Child_Nanny (ChildCode,NannyCode) values (@ChildCode,@NannyCode)
-GO
---CREATE PROC spUpdatetbl_Child_Nanny ------------------
-CREATE PROC spUpdatetbl_Child_Nanny
-	@ChildNanyCode int,
-	@ChildCode int,
-	@NannyCode int
-AS
-	update tbl_Child_Nanny set ChildCode = @ChildCode,NannyCode = @NannyCode
-	where ChildNanyCode = @ChildNanyCode
-GO
-
---- CREATE PROC spDeletetbl_Child_Nanny ---------------
-CREATE PROC spDeletetbl_Child_Nanny 
-	@ChildNanyCode int,
-	@Status Bit
-AS
-	update tbl_Child_Nanny 
-	set Status = @Status where ChildNanyCode = @ChildNanyCode
 GO
 --------------- CREATE PROC Table tbl_Class -------------------------------------------------------------------
 
@@ -603,7 +516,7 @@ CREATE PROC spSearchNameOfUser_tbl_User
 	@FullName nvarchar(100)
 AS
 	select UserCode ,FullName,Account,Password,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,FunctionCode from tbl_Users where FullName like  '%'+ @FullName +''and Status = 1
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where FullName like  '%'+ @FullName +''and Status = 1
 
 Go
 ------- CREATE PROC tbl_User spSearchStartDate_tbl_User -------------
@@ -611,14 +524,14 @@ Create PROC spSearchStartDate_tbl_User
 	@StartDate datetime
 AS
 	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,FunctionCode from tbl_Users where StartDate =@StartDate and Status = 1 ORDER BY StartDate DESC
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where StartDate =@StartDate and Status = 1 ORDER BY StartDate DESC
 Go
 --------CREATE PROC spSearchAccounttbl_User ---------------- 
 CREATE PROC spSearchAccounttbl_User
 	@Account Varchar(100)
 AS
 	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,FunctionCode from tbl_Users where Account like '%'+@Account+'' and Status = 1 ORDER BY StartDate 
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where Account like '%'+@Account+'' and Status = 1 ORDER BY StartDate 
 
 Go
 ------ spSortNameOfUsertbl_User ---------------------------
@@ -626,15 +539,15 @@ CREATE PROC spSortNameOfUsertbl_User
 	
 AS
 	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,FunctionCode from tbl_Users where Status = 1 ORDER BY FullName 
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where Status = 1 ORDER BY FullName 
 Go
 -------------------------- CREATE PROC SEARCH tbl_Child -------------------------------
 ---------  spSearchGroupAgeCodetbl_Child ------------
 CREATE PROC spSearchGroupAgeCodetbl_Child
 	@GroupAgeCode int
 AS
-	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	select ChildCode,GroupAgeCode,LastName,FirstName,
+	CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where GroupAgeCode = @GroupAgeCode and Status =1 
@@ -644,7 +557,7 @@ CREATE PROC spSearchFirstNametbl_Child
 	@FirstName nvarchar(50)
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where FirstName like '%'+ @FirstName+'' and Status =1 
@@ -654,7 +567,7 @@ CREATE PROC spSearchRegistrationDatetbl_Child
 	@RegistrationDate datetime
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where RegistrationDate = @RegistrationDate and Status =1 
@@ -666,7 +579,7 @@ CREATE PROC spSearchDateReceivedtbl_Child
 	@DateReceived datetime
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where DateReceived = @DateReceived and Status =1 
@@ -683,7 +596,7 @@ CREATE PROC spSortFirstNametbl_Child
 
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where Status =1 order by FirstName  
@@ -693,7 +606,7 @@ CREATE PROC spSortRegistrationDatetbl_Child
 
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where Status =1 order by RegistrationDate
@@ -704,26 +617,26 @@ CREATE PROC spSortDateReceivedtbl_Child
 
 AS
 	select ChildCode,GroupAgeCode,LastName,FirstName
-	MiddleName,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
+	,CONVERT(nvarchar(10), DateOfBirth, 103) as 'DateOfBirth',CurrentMedication,PassIllness
 	,DoctorName,ParentName,ParentWorkNumber,ParentMobileNumber,
 	NextOfKinContact,NoteAboutChild,CONVERT(nvarchar(10), RegistrationDate, 103) as 'RegistrationDate',DateReceived,
 	ParentEmailAddress from tbl_Child where Status =1 order by DateReceived
 Go
 ------------------------------- CREATE PROC TBL_Nanny----------------------------------
 ------ CRATE PROC spSearch[Name]tbl_Child ------------
-CREATE PROC spSearchNametbl_Child
+CREATE PROC spSearchNametbl_Nanny
 	@Name Varchar(50)
 AS
 	select NannyCode,Name,YearOfBirth ,Address,Phone,Mail ,Charge,WorkingHours,ChildCode from tbl_Nanny where Name like '%' +@Name+'' and Status = 1
 Go
 ------ spSearchChildAssignedtbl_Child ---------------
-CREATE PROC spSearchChildAssignedtbl_Child
+CREATE PROC spSearchChildAssignedtbl_Nanny
 	@ChildAssigned int
 AS
 	select NannyCode,[Name],YearOfBirth ,Address,Phone,Mail ,Charge,WorkingHours,ChildCode from tbl_Nanny where ChildCode  = @ChildAssigned and Status = 1
 Go
 ------spSort[Name]tbl_Child ------------
-CREATE PROC spSortNametbl_Child
+CREATE PROC spSortNametbl_Nanny
 	
 AS
 	select NannyCode,Name,YearOfBirth ,Address,Phone,Mail ,Charge,WorkingHours,ChildCode from tbl_Nanny where  Status = 1 order by Name	

@@ -108,12 +108,12 @@ public class RightPanel extends JPanel {
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Add Nanny!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));
         }else if (title.equals("Add User")){
-            tabbedPane.add(title, new frmAddOrEditUser("Add of the User"));
+            tabbedPane.add(title, new frmAddOrEditUser("Add", this));
             tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent(tabbedPane, title));
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Add User!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));
         }else if (title.equals("Edit User")){
-            tabbedPane.add(title, new frmAddOrEditUser("Edit of the User"));
+            tabbedPane.add(title, new frmAddOrEditUser("Edit", this));
             tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent(tabbedPane, title));
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Edit User!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));

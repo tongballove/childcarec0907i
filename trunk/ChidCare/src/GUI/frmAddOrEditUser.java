@@ -8,14 +8,20 @@
  *
  * Created on Aug 12, 2010, 8:44:40 AM
  */
-
 package GUI;
 
+import BL.UserBL;
+import GUI.Component.RightPanel;
+import com.sun.jndi.cosnaming.IiopUrl.Address;
 import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
-
-
+import sun.security.util.Password;
 
 /**
  *
@@ -24,12 +30,39 @@ import javax.swing.border.TitledBorder;
 public class frmAddOrEditUser extends javax.swing.JPanel {
 
     private String Title;
+    private RightPanel RightPanel;
+    private int UserCode;
+    private UserBL userbl;
+    private ResultSet rs;
+    private String Username;
+    private String Password;
+    private String Comfirmpass;
+    private String FullName;
+    private String Phone;
+    private String Address;
+    private String Email;
+    private String StartDate;
+    private String Feedback;
+    private String Birthday;
+    private String Sex;
+    private String Admin;
+
     /** Creates new form frmChildList */
-    public frmAddOrEditUser(String tilte) {
+    public frmAddOrEditUser(String tilte, RightPanel rightPanel) {
         Title = tilte;
+        RightPanel = rightPanel;
         initComponents();
         //plEditOrAdd
-        plEditOrAdd.setBorder(BorderFactory.createTitledBorder(null, Title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
+        plEditOrAdd.setBorder(BorderFactory.createTitledBorder(null, Title + " of the User", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
+    }
+
+    public frmAddOrEditUser(String tilte, int Code, RightPanel rightPanel) {
+        Title = tilte;
+        RightPanel = rightPanel;
+        UserCode = Code;
+        initComponents();
+        //plEditOrAdd
+        plEditOrAdd.setBorder(BorderFactory.createTitledBorder(null, Title + " of the User", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
     }
 
     /** This method is called from within the constructor to
@@ -41,17 +74,18 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         plEditOrAdd = new javax.swing.JPanel();
         plButton = new javax.swing.JPanel();
         btSave = new javax.swing.JButton();
         btReset = new javax.swing.JButton();
+        btClose = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtFullName = new javax.swing.JTextField();
-        combSex = new javax.swing.JComboBox();
         txtBirthday = new com.toedter.calendar.JDateChooser();
         txtAddress = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -69,7 +103,9 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         txtStartDate = new com.toedter.calendar.JDateChooser();
         txtFeedback = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        chbFullControl = new javax.swing.JCheckBox();
+        chbAdmin = new javax.swing.JCheckBox();
+        rbMale = new javax.swing.JRadioButton();
+        rbFemale = new javax.swing.JRadioButton();
 
         plEditOrAdd.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add of the User", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 17))); // NOI18N
 
@@ -84,24 +120,36 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         btReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/arrow-circle-double-135.png"))); // NOI18N
         btReset.setText(" Reset");
 
+        btClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cross.png"))); // NOI18N
+        btClose.setText(" Close");
+        btClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCloseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plButtonLayout = new javax.swing.GroupLayout(plButton);
         plButton.setLayout(plButtonLayout);
         plButtonLayout.setHorizontalGroup(
             plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plButtonLayout.createSequentialGroup()
-                .addContainerGap(522, Short.MAX_VALUE)
+                .addContainerGap(433, Short.MAX_VALUE)
                 .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(34, 34, 34)
                 .addComponent(btReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(32, 32, 32)
+                .addComponent(btClose)
+                .addGap(38, 38, 38))
         );
         plButtonLayout.setVerticalGroup(
             plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plButtonLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSave)
-                    .addComponent(btReset))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(btReset)
+                    .addComponent(btClose))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detail of The User"));
@@ -118,8 +166,6 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel6.setText("Address :");
 
-        combSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female" }));
-
         txtBirthday.setDateFormatString("MMMM/dd/yyyy");
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14));
@@ -128,6 +174,7 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel8.setText("Email :");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("UserName :");
 
         txtComfirmPass.addActionListener(new java.awt.event.ActionListener() {
@@ -136,19 +183,28 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Password :");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Comfirm Password:");
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Start Date:");
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Feedback :");
 
         txtStartDate.setDateFormatString("MMMM/dd/yyyy");
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Full Control :");
 
-        chbFullControl.setText(" Admin");
+        chbAdmin.setText(" Admin");
+
+        rbMale.setText("Male");
+
+        rbFemale.setText("Female");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -164,14 +220,18 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtFullName, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtComfirmPass, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(combSex, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBirthday, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtFullName, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtComfirmPass, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtBirthday, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUserName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rbMale)
+                        .addGap(10, 10, 10)
+                        .addComponent(rbFemale)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6)
@@ -179,15 +239,15 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                     .addComponent(jLabel12)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14))
-                .addGap(41, 41, 41)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtFeedback)
                         .addComponent(txtStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtEmail)
                         .addComponent(txtPhoneNumber)
-                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(chbFullControl))
+                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chbAdmin))
                 .addGap(71, 71, 71))
         );
         jPanel2Layout.setVerticalGroup(
@@ -221,16 +281,17 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(combSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(txtFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rbMale)
+                    .addComponent(rbFemale))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(txtBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14)
-                        .addComponent(chbFullControl)))
+                        .addComponent(chbAdmin)
+                        .addComponent(jLabel14)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -240,9 +301,9 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
             plEditOrAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plEditOrAddLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(plEditOrAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 766, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(plButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(plEditOrAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(plButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         plEditOrAddLayout.setVerticalGroup(
@@ -252,21 +313,20 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(plButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(262, 262, 262))
+                .addGap(274, 274, 274))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -275,15 +335,18 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void txtComfirmPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComfirmPassActionPerformed
-
 }//GEN-LAST:event_txtComfirmPassActionPerformed
 
-
+    private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
+        // TODO add your handling code here:
+        close();
+}//GEN-LAST:event_btCloseActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btClose;
     private javax.swing.JButton btReset;
     private javax.swing.JButton btSave;
-    private javax.swing.JCheckBox chbFullControl;
-    private javax.swing.JComboBox combSex;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chbAdmin;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -299,6 +362,8 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel plButton;
     private javax.swing.JPanel plEditOrAdd;
+    private javax.swing.JRadioButton rbFemale;
+    private javax.swing.JRadioButton rbMale;
     private javax.swing.JTextField txtAddress;
     private com.toedter.calendar.JDateChooser txtBirthday;
     private javax.swing.JPasswordField txtComfirmPass;
@@ -311,4 +376,169 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 
+    private void close() {
+        for (int i = 0; i < RightPanel.getCount(); i++) {
+            if (RightPanel.getTabTitle(Title + " User", i)) {
+                RightPanel.RemoveTabAt(i);
+            }
+        }
+    }
+
+    private Boolean check() {
+        String strEmail = "\\w+(\\.\\w+)*@\\w+(\\.\\w+)+";
+        Date d = new Date();
+        if (txtLastName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter LastName");
+            txtLastName.requestFocus();
+            return false;
+        } else if (txtFirstName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter FirstName");
+            txtFirstName.requestFocus();
+            return false;
+        } else if (txtAddress.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter Address");
+            txtAddress.requestFocus();
+            return false;
+        } else if (txtParentName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter ParentName");
+            txtParentName.requestFocus();
+            return false;
+        } else if (txtParentMobileNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter ParentMobileNumber");
+            txtParentMobileNumber.requestFocus();
+            return false;
+        } //        try {
+        //            int age = Integer.parseInt(txtParentMobileNumber.getText());
+        //        } catch (Exception e) {
+        //            JOptionPane.showMessageDialog(this, "PhoneNumBer must Number");
+        //            return;
+        //        }
+        else if (txtParentEmailAddress.getText().length() != 0) {
+            if (!Pattern.matches(strEmail, txtParentEmailAddress.getText())) {
+                JOptionPane.showMessageDialog(this, "Email no match!");
+                txtParentEmailAddress.requestFocus();
+                txtParentEmailAddress.selectAll();
+                return false;
+            }
+        } else if (txtBirthday.getDate() != null) {
+            if (txtBirthday.getCalendar().getTime().after(d)) {
+                JOptionPane.showMessageDialog(this, "Birthday Date < today");
+                txtBirthday.setDate(null);
+                txtBirthday.requestFocus();
+                return false;
+            }
+        } else if (txtRegistrationDate.getDate() != null) {
+            if (txtRegistrationDate.getCalendar().getTime().after(d)) {
+                JOptionPane.showMessageDialog(this, "RegistrationDate Date <= today");
+                txtRegistrationDate.setDate(null);
+                txtRegistrationDate.requestFocus();
+                return false;
+            }
+        } else if (txtDateReceived.getDate().after(txtRegistrationDate.getDate())) {
+            JOptionPane.showMessageDialog(this, "RegistrationDate < DateReceived");
+            txtDateReceived.setDate(null);
+            txtDateReceived.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private void setText(int x) {
+        txtAddress.setText("");
+        txtEmail.setText("");
+        txtFullName.setText("");
+        txtPhoneNumber.setText("");
+        txtFeedback.setText("");
+    }
+
+    private void setText() {
+        if (Title.equals("Edit")) {
+            if (UserCode >= 1) {
+                userbl = new UserBL();
+                rs = userbl.getResult(" ", UserCode);
+                try {
+                    if (rs.next()) {
+                        UserCode = rs.getInt("UserCode");
+                        txtUserName.setText(rs.getString("ParentName"));
+                        txtPass.setText(rs.getString("ParentWorkNumber"));
+                        txtComfirmPass.setText(rs.getString("ParentMobileNumber"));
+                        txtFullName.setText(rs.getString("LastName"));
+                        txtPhoneNumber.setText(rs.getString("FirstName"));
+                        txtAddress.setText(rs.getString("Address"));
+                        txtEmail.setText(rs.getString("CurrentMedication"));
+                        txtStartDate.setDate(rs.getDate("PassIllness"));
+                        txtFeedback.setText(rs.getString("DoctorName"));
+                        txtBirthday.setDate(rs.getDate("DateOfBirth"));
+                        if (rs.getBoolean("Sex")) {
+                            rbMale.setSelected(true);
+                        } else {
+                            rbFemale.setSelected(true);
+                        }
+                        if (rs.getBoolean("")) {
+                            chbAdmin.setSelected(true);
+                        }
+                        txtUserName.setEditable(false);
+                        txtPass.setEditable(false);
+                        txtComfirmPass.setEditable(false);
+                        rbMale.setEnabled(false);
+                        rbFemale.setEnabled(false);
+                        txtBirthday.setEnabled(false);
+                        txtStartDate.setEnabled(false);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Not find this ChildCode");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmAddOrEditChild.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else if (Title.equals("Add")) {
+            txtUserName.setText("");
+            txtPass.setText("");
+            txtAddress.setText("");
+            txtComfirmPass.setText("");
+            txtEmail.setText("");
+            txtFullName.setText("");
+            txtPhoneNumber.setText("");
+            txtFeedback.setText("");
+            txtBirthday.setDate(null);
+            txtStartDate.setDate(null);
+
+        }
+    }
+
+    private void getText() {
+        Username = txtUserName.getText();
+        Password = new String (txtPass.getPassword());
+        Comfirmpass = new String (txtComfirmPass.getPassword());
+        FullName = txtFullName.getText();
+        Phone = txtPhoneNumber.getText();
+        Address = txtAddress.getText();
+        Email = txtEmail.getText();
+        StartDate = txtStartDate.getCalendar().getTime().toLocaleString();;
+        Feedback = txtFeedback.getText();
+        Birthday = txtBirthday.getCalendar().getTime().toLocaleString();;
+        if (rbMale.isSelected()) {
+            Sex = "1";
+        } else {
+            Sex = "0";
+        }
+        if (chbAdmin.isSelected()) {
+            Admin = "1";
+        }
+    }
+
+    private void Save() {
+        int j = 0;
+        
+        for (int i = 0; i < RightPanel.getCount(); i++) {
+            if (RightPanel.getTabTitle("Child List", i)) {
+                RightPanel.RemoveTabAt(i);
+                j = i;
+            }
+        }
+        if (j > 0) {
+            RightPanel.addSubPane("Child List", RightPanel, null);
+        }
+    }
 }
