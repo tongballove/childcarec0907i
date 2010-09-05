@@ -499,7 +499,7 @@ public class frmViewChild extends javax.swing.JDialog {
 
     private void setText(){
         nannybl = new NannyBL();
-        rs = nannybl.getResult("spSearchChilCodetbl_Child", ChildCode);
+        rs = nannybl.ExecuteSQLProc("spSearchChilCodetbl_Child", ChildCode);
         try {
             if (rs.next()) {
                 lbFName.setText(rs.getString("FirstName"));

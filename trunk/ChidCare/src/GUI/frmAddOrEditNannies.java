@@ -484,7 +484,7 @@ public class frmAddOrEditNannies extends javax.swing.JPanel {
         if (Title.equals("Edit")) {
             if (NannyCode >= 1) {
                 nannybl = new NannyBL();
-                rs = nannybl.getResult("spGetNanny", NannyCode);
+                rs = nannybl.ExecuteSQLProc("spGetNanny", NannyCode);
                 try {
                     if (rs.next()) {
                         NannyCode = rs.getInt("NannyCode");
@@ -544,6 +544,8 @@ public class frmAddOrEditNannies extends javax.swing.JPanel {
     private void Save() {
         int j = 0;
         nannybl = new NannyBL(Title, NannyCode, ClassCode, ChildCode, Name, DateOfBirth, Sex, Address, Phone, Email, Charge, WorkingHours);
+        nannybl.setStatement();
+        nannybl.ExecuteSQLProc();
         for (int i = 0; i < RightPanel.getCount(); i++) {
             if (RightPanel.getTabTitle("Nanny List", i)) {
                 RightPanel.RemoveTabAt(i);
