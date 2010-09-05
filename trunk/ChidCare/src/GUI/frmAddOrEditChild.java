@@ -582,13 +582,15 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please, Enter ParentMobileNumber");
             txtParentMobileNumber.requestFocus();
             return false;
-        } //        try {
-        //            int age = Integer.parseInt(txtParentMobileNumber.getText());
-        //        } catch (Exception e) {
-        //            JOptionPane.showMessageDialog(this, "PhoneNumBer must Number");
-        //            return;
-        //        }
-        else if (txtParentEmailAddress.getText().length() != 0) {
+        } else if (txtParentMobileNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter ParentMobileNumber");
+            txtParentMobileNumber.requestFocus();
+            return false;
+        } else if (Pattern.matches("[0-9]", txtParentMobileNumber.getText())) {
+            JOptionPane.showMessageDialog(this, "Parent Mobile number most is number");
+            txtParentMobileNumber.requestFocus();
+            return false;
+        } else if (txtParentEmailAddress.getText().length() != 0) {
             if (!Pattern.matches(strEmail, txtParentEmailAddress.getText())) {
                 JOptionPane.showMessageDialog(this, "Email no match!");
                 txtParentEmailAddress.requestFocus();

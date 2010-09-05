@@ -136,7 +136,13 @@ AS
 	where Account = @UserName and Password = @Pass and Status =1
 --execute spGetLogin 'Admin','123456'
 Go
--- --NameofUser,Sex,Address,Birthday,Phone,Email,StartDate,Feedback
+--------- CREATE PROC spGet_User -------------------
+CREATE PROC spGet_Users
+	@UserCode int
+AS	
+	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,[Admin] from tbl_Users where Status =1
+GO
 --------- CREATE PROC spGetAllUser -------------------
 CREATE PROC  spGetAlltbl_Users
 
@@ -170,29 +176,22 @@ GO
 
 CREATE PROC spUpdatetbl_Users
 	@UserCode int,
-	@FullName nvarchar(100),
-	@Sex Bit,
 	@Address Nvarchar(200),
-	@Birthday datetime,
 	@Phone int,
 	@Email Nvarchar(200),
-	@StartDate Datetime,
 	@Feedback Nvarchar(100), 
 	@Admin bit
-
 	
 AS
 	update tbl_Users
-	set FullName = @FullName ,Sex = @Sex,Address = @Address,Birthday = @Birthday,Phone = @Phone
-	,Email = @Email,StartDate = @StartDate, Feedback  = @Feedback, [Admin] = @Admin 
+	set Address = @Address,Phone = @Phone, Email = @Email, Feedback  = @Feedback, [Admin] = @Admin 
 	where UserCode = @UserCode
 GO		
 -------	CREATE PROC spDeleteTbl_User ---------------------------
 CREATE PROC spDeletetbl_Users
-	@UserCode int,
-	@Status Bit
+	@UserCode int
 AS
-	update tbl_Users set Status = @Status
+	update tbl_Users set Status = 0
 	where  UserCode = @UserCode
 GO
 -------------- CREATE PROC Table tbl_AgeGroup -------------------------

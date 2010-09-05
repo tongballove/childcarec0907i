@@ -445,13 +445,15 @@ public class frmAddOrEditNannies extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please, Enter Class");
             txtClass.requestFocus();
             return false;
-        } //        try {
-        //            int age = Integer.parseInt(txtParentMobileNumber.getText());
-        //        } catch (Exception e) {
-        //            JOptionPane.showMessageDialog(this, "PhoneNumBer must Number");
-        //            return;
-        //        }
-        else if (txtEmail.getText().length() != 0) {
+        } else if (txtPhoneNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter Phone number");
+            txtClass.requestFocus();
+            return false;
+        } else if (Pattern.matches("[0-9]", txtPhoneNumber.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone number most is number");
+            txtPhoneNumber.requestFocus();
+            return false;
+        } else if (txtEmail.getText().length() != 0) {
             if (!Pattern.matches(strEmail, txtEmail.getText())) {
                 JOptionPane.showMessageDialog(this, "Email no match!");
                 txtEmail.requestFocus();
