@@ -52,8 +52,8 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         Title = tilte;
         RightPanel = rightPanel;
         initComponents();
-        //plEditOrAdd
         plEditOrAdd.setBorder(BorderFactory.createTitledBorder(null, Title + " of the User", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
+        setText();
     }
 
     public frmAddOrEditUser(String tilte, int Code, RightPanel rightPanel) {
@@ -61,8 +61,8 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         RightPanel = rightPanel;
         UserCode = Code;
         initComponents();
-        //plEditOrAdd
         plEditOrAdd.setBorder(BorderFactory.createTitledBorder(null, Title + " of the User", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
+        setText();
     }
 
     /** This method is called from within the constructor to
@@ -201,8 +201,10 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
         chbAdmin.setText(" Admin");
 
+        buttonGroup1.add(rbMale);
         rbMale.setText("Male");
 
+        buttonGroup1.add(rbFemale);
         rbFemale.setText("Female");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -324,8 +326,9 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(plEditOrAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -349,7 +352,6 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         // TODO add your handling code here:
         setText(0);
     }//GEN-LAST:event_btResetActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
     private javax.swing.JButton btReset;
@@ -400,12 +402,12 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please, Enter UserName");
             txtUserName.requestFocus();
             return false;
-        } else if (txtPass.getPassword() == null) {
-            JOptionPane.showMessageDialog(this, "Please, Enter ParentName");
+        } else if (new String (txtPass.getPassword()).equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter Password");
             txtPass.requestFocus();
             return false;
-        } else if (txtComfirmPass.getPassword() == null) {
-            JOptionPane.showMessageDialog(this, "Please, Enter ParentName");
+        } else if (new String (txtComfirmPass.getPassword()).equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter Confirm Password");
             txtComfirmPass.requestFocus();
             return false;
         } else if (txtFullName.getText().equals("")) {
@@ -415,6 +417,11 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         } else if (!rbMale.isSelected() || rbFemale.isSelected()) {
             JOptionPane.showMessageDialog(this, "Please, Select Male or Female");
             return false;
+        } else if (txtBirthday.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Please, Enter or select Birth Day");
+                txtBirthday.setDate(null);
+                txtBirthday.requestFocus();
+                return false;
         } else if (txtBirthday.getDate() != null) {
             if (txtBirthday.getCalendar().getTime().after(d)) {
                 JOptionPane.showMessageDialog(this, "Birthday Date < today");
@@ -441,9 +448,13 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                 txtEmail.selectAll();
                 return false;
             }
+        } else if (txtStartDate.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Please, Enter or select Start Date");
+                txtStartDate.requestFocus();
+                return false;
         } else if (txtStartDate.getDate() != null) {
             if (txtStartDate.getCalendar().getTime().after(d)) {
-                JOptionPane.showMessageDialog(this, "RegistrationDate Date <= today");
+                JOptionPane.showMessageDialog(this, "Start Date <= today");
                 txtStartDate.setDate(null);
                 txtStartDate.requestFocus();
                 return false;
@@ -468,16 +479,16 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                 try {
                     if (rs.next()) {
                         UserCode = rs.getInt("UserCode");
-                        txtUserName.setText(rs.getString("ParentName"));
-                        txtPass.setText(rs.getString("ParentWorkNumber"));
-                        txtComfirmPass.setText(rs.getString("ParentMobileNumber"));
-                        txtFullName.setText(rs.getString("LastName"));
-                        txtPhoneNumber.setText(rs.getString("FirstName"));
+                        txtUserName.setText(rs.getString("Account"));
+                        txtPass.setText("");
+                        txtComfirmPass.setText("");
+                        txtFullName.setText(rs.getString("FullName"));
+                        txtPhoneNumber.setText(rs.getString("Phone"));
                         txtAddress.setText(rs.getString("Address"));
-                        txtEmail.setText(rs.getString("CurrentMedication"));
-                        txtStartDate.setDate(rs.getDate("PassIllness"));
-                        txtFeedback.setText(rs.getString("DoctorName"));
-                        txtBirthday.setDate(rs.getDate("DateOfBirth"));
+                        txtEmail.setText(rs.getString("Email"));
+                        txtBirthday.setDate(rs.getDate("Birthday"));
+                        txtStartDate.setDate(rs.getDate("StartDate"));
+                        txtFeedback.setText(rs.getString("FeedBack"));
                         if (rs.getBoolean("Sex")) {
                             rbMale.setSelected(true);
                         } else {
