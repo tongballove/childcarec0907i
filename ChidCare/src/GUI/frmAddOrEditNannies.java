@@ -510,7 +510,6 @@ public class frmAddOrEditNannies extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Not find this ChildCode");
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(frmAddOrEditChild.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else if (Title.equals("Add")) {

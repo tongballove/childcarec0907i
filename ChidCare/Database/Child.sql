@@ -102,14 +102,14 @@ GO
 
 ------------------ CREATE PROC Login --------------------------------------------------------
 
------------ CREATE PROC spGetNameLogin -------
+----------- CREATE PROC spGetLogin -------
 CREATE PROC spGetLogin
 	@UserName nvarchar(30),
 	@Pass nvarchar(30)
 AS
 	select FullName, Account, [Password], Phone, Email, [Address], [Admin] from tbl_Users 
 	where Account = @UserName and [Password] = @Pass and Status =1
---execute spGetNameLogin 'Admin','123456'
+--execute spGetLogin 'Admin','123456'
 GO
 
 ----------------- CREATE PROC Table tbl_User -----------------------------------------------
@@ -141,8 +141,8 @@ Go
 CREATE PROC spGet_Users
 	@UserCode int
 AS	
-	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,[Admin] from tbl_Users where Status =1
+	select UserCode ,FullName,Account,[Password],Sex,[Address],Birthday,Phone,Email,
+	StartDate,Feedback,[Admin] from tbl_Users where UserCode = @UserCode and Status = 1
 GO
 --------- CREATE PROC spGetAllUser -------------------
 CREATE PROC  spGetAlltbl_Users

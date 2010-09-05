@@ -9,7 +9,6 @@ import GUI.frmChildList;
 import GUI.frmNannyList;
 import java.awt.*;
 import javax.swing.*;
-import GUI.frmAddOrEditChild;
 import GUI.frmAddOrEditNannies;
 import GUI.frmAddOrEditUser;
 import GUI.frmAgeGroupList;
@@ -98,7 +97,7 @@ public class RightPanel extends JPanel {
         int tabCount = tabbedPane.getTabCount();
 
         if (title.equals("Add Children")) {
-            tabbedPane.add(title, new frmAddOrEditChild("Add", this));
+            //tabbedPane.add(title, new frmAddOrEditChild("Add", this));
             tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent(tabbedPane, title));
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Add Children!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));
@@ -123,7 +122,7 @@ public class RightPanel extends JPanel {
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Edit Nanny!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));
         }else if (title.equals("Edit Children")){
-            tabbedPane.add(title, new frmAddOrEditChild("Edit", Code, this));
+            //tabbedPane.add(title, new frmAddOrEditChild("Edit", Code, this));
             tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent(tabbedPane, title));
             tabbedPane.setToolTipTextAt(tabCount, "This is tab Edit Childrent!");
             tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(title));

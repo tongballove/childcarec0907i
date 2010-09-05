@@ -23,7 +23,6 @@ public class frmUserList extends javax.swing.JPanel {
 
     private RightPanel rightpanel;
     private ResulSetTableModel rtm;
-    private int UserCode;
     private UserBL userbl;
 
     /** Creates new form frmChildList */
@@ -232,6 +231,7 @@ public class frmUserList extends javax.swing.JPanel {
     }//GEN-LAST:event_btDeleteActionPerformed
 
     private void Event(String evt) {
+        int UserCode;
         if (evt.equals("Delete")) {
             if ((tbUser.getSelectedRow()) != -1) {
                 UserCode = Integer.parseInt(tbUser.getValueAt(tbUser.getSelectedRow(), 0).toString());
@@ -239,6 +239,7 @@ public class frmUserList extends javax.swing.JPanel {
 
                 if (i == 0) {
                     userbl = new UserBL(evt, UserCode);
+                    userbl.setStatement();
                     userbl.ExecuteSQLProc();
                 }
             } else {

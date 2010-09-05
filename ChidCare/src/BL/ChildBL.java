@@ -20,6 +20,25 @@ public class ChildBL {
     private ResultSet Result;
     private int Record;
     private String message;
+//    String evt;
+//    int ChildCode;
+//    int GroupAgeCode;
+//    String LastName;
+//    String FirstName;
+//    String DateOfBirth;
+//    String Sex;
+//    String Address;
+//    String CurrentMedication;
+//    String PassIllness;
+//    String DoctorName;
+//    String ParentName;
+//    String ParentWorkNumber;
+//    String ParentMobileNumber;
+//    String NextOfKinContact;
+//    String NoteAboutChild;
+//    String RegistrationDate;
+//    String DateReceived;
+//    String ParentEmailAddress;
 
     public ChildBL(String evt, int ChildCode, int GroupAgeCode, String LastName, String FirstName, String DateOfBirth, String Sex, String Address, String CurrentMedication,
             String PassIllness, String DoctorName, String ParentName, String ParentWorkNumber, String ParentMobileNumber, String NextOfKinContact, String NoteAboutChild, String RegistrationDate,
