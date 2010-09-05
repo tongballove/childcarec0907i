@@ -107,7 +107,7 @@ public class frmMainFrame extends javax.swing.JFrame {
 
     private void SetCombonentBase(String fullname, String username, String phone, String email, String address) {
 
-        ImageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/admin3.png")));
+        ImageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user1_64.png")));
         ImageUser.setPreferredSize(new java.awt.Dimension(80, 80));
         fullName.setText("FullName: " + fullname);
         Username.setText("UserName: " + username);
