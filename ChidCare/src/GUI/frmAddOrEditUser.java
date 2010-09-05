@@ -12,16 +12,16 @@ package GUI;
 
 import BL.UserBL;
 import GUI.Component.RightPanel;
-import com.sun.jndi.cosnaming.IiopUrl.Address;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
-import sun.security.util.Password;
 
 /**
  *
@@ -119,6 +119,11 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
         btReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/arrow-circle-double-135.png"))); // NOI18N
         btReset.setText(" Reset");
+        btReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btResetActionPerformed(evt);
+            }
+        });
 
         btClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cross.png"))); // NOI18N
         btClose.setText(" Close");
@@ -174,30 +179,24 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel8.setText("Email :");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel9.setText("UserName :");
 
-        txtComfirmPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtComfirmPassActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel10.setText("Password :");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel11.setText("Comfirm Password:");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel12.setText("Start Date:");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel13.setText("Feedback :");
 
         txtStartDate.setDateFormatString("MMMM/dd/yyyy");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel14.setText("Full Control :");
 
         chbAdmin.setText(" Admin");
@@ -332,15 +331,25 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         // TODO add your handling code here:
+        Boolean test = check();
+        if (test == false) {
+            return;
+        }
+        getText();
+        Save();
+        setText();
     }//GEN-LAST:event_btSaveActionPerformed
-
-    private void txtComfirmPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComfirmPassActionPerformed
-}//GEN-LAST:event_txtComfirmPassActionPerformed
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
         // TODO add your handling code here:
         close();
 }//GEN-LAST:event_btCloseActionPerformed
+
+    private void btResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResetActionPerformed
+        // TODO add your handling code here:
+        setText(0);
+    }//GEN-LAST:event_btResetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
     private javax.swing.JButton btReset;
@@ -387,39 +396,25 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     private Boolean check() {
         String strEmail = "\\w+(\\.\\w+)*@\\w+(\\.\\w+)+";
         Date d = new Date();
-        if (txtLastName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please, Enter LastName");
-            txtLastName.requestFocus();
+        if (txtUserName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter UserName");
+            txtUserName.requestFocus();
             return false;
-        } else if (txtFirstName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please, Enter FirstName");
-            txtFirstName.requestFocus();
-            return false;
-        } else if (txtAddress.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please, Enter Address");
-            txtAddress.requestFocus();
-            return false;
-        } else if (txtParentName.getText().equals("")) {
+        } else if (txtPass.getPassword() == null) {
             JOptionPane.showMessageDialog(this, "Please, Enter ParentName");
-            txtParentName.requestFocus();
+            txtPass.requestFocus();
             return false;
-        } else if (txtParentMobileNumber.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please, Enter ParentMobileNumber");
-            txtParentMobileNumber.requestFocus();
+        } else if (txtComfirmPass.getPassword() == null) {
+            JOptionPane.showMessageDialog(this, "Please, Enter ParentName");
+            txtComfirmPass.requestFocus();
             return false;
-        } //        try {
-        //            int age = Integer.parseInt(txtParentMobileNumber.getText());
-        //        } catch (Exception e) {
-        //            JOptionPane.showMessageDialog(this, "PhoneNumBer must Number");
-        //            return;
-        //        }
-        else if (txtParentEmailAddress.getText().length() != 0) {
-            if (!Pattern.matches(strEmail, txtParentEmailAddress.getText())) {
-                JOptionPane.showMessageDialog(this, "Email no match!");
-                txtParentEmailAddress.requestFocus();
-                txtParentEmailAddress.selectAll();
-                return false;
-            }
+        } else if (txtFullName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter FullName");
+            txtFullName.requestFocus();
+            return false;
+        } else if (!rbMale.isSelected() || rbFemale.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please, Select Male or Female");
+            return false;
         } else if (txtBirthday.getDate() != null) {
             if (txtBirthday.getCalendar().getTime().after(d)) {
                 JOptionPane.showMessageDialog(this, "Birthday Date < today");
@@ -427,18 +422,32 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                 txtBirthday.requestFocus();
                 return false;
             }
-        } else if (txtRegistrationDate.getDate() != null) {
-            if (txtRegistrationDate.getCalendar().getTime().after(d)) {
-                JOptionPane.showMessageDialog(this, "RegistrationDate Date <= today");
-                txtRegistrationDate.setDate(null);
-                txtRegistrationDate.requestFocus();
+        } else if (txtAddress.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter Address");
+            txtAddress.requestFocus();
+            return false;
+        } else if (txtPhoneNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please, Enter MobileNumber");
+            txtPhoneNumber.requestFocus();
+            return false;
+        } else if (Pattern.matches("[0-9]", txtPhoneNumber.getText())) {
+            JOptionPane.showMessageDialog(this, "Parent Mobile number most is number");
+            txtPhoneNumber.requestFocus();
+            return false;
+        } else if (txtEmail.getText().length() != 0) {
+            if (!Pattern.matches(strEmail, txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email no match!");
+                txtEmail.requestFocus();
+                txtEmail.selectAll();
                 return false;
             }
-        } else if (txtDateReceived.getDate().after(txtRegistrationDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "RegistrationDate < DateReceived");
-            txtDateReceived.setDate(null);
-            txtDateReceived.requestFocus();
-            return false;
+        } else if (txtStartDate.getDate() != null) {
+            if (txtStartDate.getCalendar().getTime().after(d)) {
+                JOptionPane.showMessageDialog(this, "RegistrationDate Date <= today");
+                txtStartDate.setDate(null);
+                txtStartDate.requestFocus();
+                return false;
+            }
         }
         return true;
     }
@@ -455,7 +464,7 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         if (Title.equals("Edit")) {
             if (UserCode >= 1) {
                 userbl = new UserBL();
-                rs = userbl.getResult(" ", UserCode);
+                rs = userbl.ExecuteSQLProc("spGet_Users", UserCode);
                 try {
                     if (rs.next()) {
                         UserCode = rs.getInt("UserCode");
@@ -509,15 +518,15 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
     private void getText() {
         Username = txtUserName.getText();
-        Password = new String (txtPass.getPassword());
-        Comfirmpass = new String (txtComfirmPass.getPassword());
+        Password = new String(txtPass.getPassword());
+        Comfirmpass = new String(txtComfirmPass.getPassword());
         FullName = txtFullName.getText();
         Phone = txtPhoneNumber.getText();
         Address = txtAddress.getText();
         Email = txtEmail.getText();
-        StartDate = txtStartDate.getCalendar().getTime().toLocaleString();;
+        StartDate = txtStartDate.getCalendar().getTime().toLocaleString();
         Feedback = txtFeedback.getText();
-        Birthday = txtBirthday.getCalendar().getTime().toLocaleString();;
+        Birthday = txtBirthday.getCalendar().getTime().toLocaleString();
         if (rbMale.isSelected()) {
             Sex = "1";
         } else {
@@ -530,15 +539,17 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
     private void Save() {
         int j = 0;
-        
+        userbl = new UserBL(Title, UserCode, FullName, Phone, Password, Sex, Address, Birthday, Phone, Email, StartDate, Feedback, Admin);
+        userbl.setStatement();
+        userbl.ExecuteSQLProc();
         for (int i = 0; i < RightPanel.getCount(); i++) {
-            if (RightPanel.getTabTitle("Child List", i)) {
+            if (RightPanel.getTabTitle("User List", i)) {
                 RightPanel.RemoveTabAt(i);
                 j = i;
             }
         }
         if (j > 0) {
-            RightPanel.addSubPane("Child List", RightPanel, null);
+            RightPanel.addSubPane("User List", RightPanel, null);
         }
     }
 }

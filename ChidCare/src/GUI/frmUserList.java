@@ -10,6 +10,7 @@
  */
 package GUI;
 
+import DAL.ResulSetTableModel;
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
 
@@ -20,10 +21,14 @@ import javax.swing.JOptionPane;
 public class frmUserList extends javax.swing.JPanel {
 
     private RightPanel rightpanel;
+    private ResulSetTableModel rtm;
 
     /** Creates new form frmChildList */
     public frmUserList(RightPanel rightPanel) {
         rightpanel = rightPanel;
+        rtm = new ResulSetTableModel();
+        rtm.setHostURL();
+        rtm.setQuery("Execute spGetAlltbl_Users");
         initComponents();
     }
 
@@ -206,26 +211,31 @@ public class frmUserList extends javax.swing.JPanel {
     private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
         // TODO add your handling code here:
         Event("Search");
+        getDataSource();
 }//GEN-LAST:event_btSearchActionPerformed
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         Event("Add");
+        getDataSource();
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         // TODO add your handling code here:
         Event("Edit");
+        getDataSource();
     }//GEN-LAST:event_btEditActionPerformed
 
     private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
         // TODO add your handling code here:
         Event("Sort");
+        getDataSource();
     }//GEN-LAST:event_cbSortActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         Event("Delete");
+        getDataSource();
     }//GEN-LAST:event_btDeleteActionPerformed
 
     private void Event(String evt) {
@@ -300,4 +310,10 @@ public class frmUserList extends javax.swing.JPanel {
     private javax.swing.JTable tbUser;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+    private void getDataSource(){
+        rtm = new ResulSetTableModel();
+        rtm.setHostURL();
+        rtm.setQuery("Execute spGetAlltbl_Users");
+        tbUser.setModel(rtm);
+    }
 }

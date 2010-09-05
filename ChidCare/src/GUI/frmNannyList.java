@@ -224,6 +224,7 @@ public class frmNannyList extends javax.swing.JPanel {
     private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
         // TODO add your handling code here:
         Event("Sort");
+        getDataSource();
     }//GEN-LAST:event_cbSortActionPerformed
 
     private void Event(String evt) {
