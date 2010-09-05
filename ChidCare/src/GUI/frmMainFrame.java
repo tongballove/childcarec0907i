@@ -47,7 +47,7 @@ public class frmMainFrame extends javax.swing.JFrame {
     private final JLabel Address;
 
     /** Creates new form MainFrame */
-    public frmMainFrame(String fullname, String username, String phone, String email, String address) {
+    public frmMainFrame(String fullname, String username, String phone, String email, String address, boolean admin) {
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -103,11 +103,12 @@ GO
 ------------------ CREATE PROC Login --------------------------------------------------------
 
 ----------- CREATE PROC spGetNameLogin -------
-CREATE PROC spGetNameLogin
+CREATE PROC spGetLogin
 	@UserName nvarchar(30),
 	@Pass nvarchar(30)
 AS
-	select FullName, [Admin] from tbl_Users where Account = @UserName and Password = @Pass and Status =1   
+	select FullName, Account, [Password], Phone, Email, [Address], [Admin] from tbl_Users 
+	where Account = @UserName and [Password] = @Pass and Status =1
 --execute spGetNameLogin 'Admin','123456'
 GO
 

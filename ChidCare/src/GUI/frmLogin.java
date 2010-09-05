@@ -270,7 +270,7 @@ public class frmLogin extends javax.swing.JDialog {
                     rs = loginbl.getResult();
                     if (rs.next()) {
                         this.setVisible(false);
-                        frmMainFrame mn = new frmMainFrame(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                        frmMainFrame mn = new frmMainFrame(rs.getString("FullName"), rs.getString("Account"), rs.getString("Phone"), rs.getString("Email"), rs.getString("Address"), rs.getBoolean("Admin"));
                         mn.setVisible(true);
                         this.dispose();
                     } else {

@@ -10,6 +10,7 @@
  */
 package GUI;
 
+import BL.UserBL;
 import DAL.ResulSetTableModel;
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
@@ -22,6 +23,8 @@ public class frmUserList extends javax.swing.JPanel {
 
     private RightPanel rightpanel;
     private ResulSetTableModel rtm;
+    private int UserCode;
+    private UserBL userbl;
 
     /** Creates new form frmChildList */
     public frmUserList(RightPanel rightPanel) {
@@ -107,17 +110,7 @@ public class frmUserList extends javax.swing.JPanel {
 
         plTable.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List of the Users", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
 
-        tbUser.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tbUser.setModel(rtm);
         jScrollPane1.setViewportView(tbUser);
 
         javax.swing.GroupLayout plTableLayout = new javax.swing.GroupLayout(plTable);
@@ -241,25 +234,27 @@ public class frmUserList extends javax.swing.JPanel {
     private void Event(String evt) {
         if (evt.equals("Delete")) {
             if ((tbUser.getSelectedRow()) != -1) {
+                UserCode = Integer.parseInt(tbUser.getValueAt(tbUser.getSelectedRow(), 0).toString());
+                int i = CreateOptionDialog("Are you sure want delete this User ?", "Delete User - Child Care");
 
-                int i = CreateOptionDialog("Are you sure want delete this Activite ?", "Delete Activite - Child Care");
-
-                if (i == 1) {
-                    // TODO add your handling code here:
+                if (i == 0) {
+                    userbl = new UserBL(evt, UserCode);
+                    userbl.ExecuteSQLProc();
                 }
             } else {
-                CreateWarningDialog("Please select activite you want delete !", "Warning - Child Care");
+                CreateWarningDialog("Please select User you want delete !", "Warning - Child Care");
             }
         } else if (evt.equals("Edit")) {
-            if((tbUser.getSelectedRow()) != -1){
-            for (int i = 0; i < rightpanel.getCount(); i++) {
-                if (rightpanel.getTabTitle("Edit User", i)) {
-                    return;
+            if ((tbUser.getSelectedRow()) != -1) {
+                UserCode = Integer.parseInt(tbUser.getValueAt(tbUser.getSelectedRow(), 0).toString());
+                for (int i = 0; i < rightpanel.getCount(); i++) {
+                    if (rightpanel.getTabTitle("Edit User", i)) {
+                        return;
+                    }
                 }
-            }
-            rightpanel.addSubPane("Edit User", 0);
-            }else{
-                CreateWarningDialog("Please select activite you want edit !", "Warning - Child Care");
+                rightpanel.addSubPane("Edit User", UserCode);
+            } else {
+                CreateWarningDialog("Please select User you want edit !", "Warning - Child Care");
             }
         } else if (evt.equals("Add")) {
             for (int i = 0; i < rightpanel.getCount(); i++) {
@@ -272,7 +267,7 @@ public class frmUserList extends javax.swing.JPanel {
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
             if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
-                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+                CreateWarningDialog("Please select User you want search !", "Warning - Child Care");
             } else {
                 // TODO add your handling code here:
             }
@@ -310,7 +305,8 @@ public class frmUserList extends javax.swing.JPanel {
     private javax.swing.JTable tbUser;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
-    private void getDataSource(){
+
+    private void getDataSource() {
         rtm = new ResulSetTableModel();
         rtm.setHostURL();
         rtm.setQuery("Execute spGetAlltbl_Users");
