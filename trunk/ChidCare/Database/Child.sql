@@ -9,6 +9,7 @@ CREATE TABLE tbl_Function(
 )
 
 --insert into tbl_Function values ('Admin',1)
+Go
 GO
 CREATE TABLE tbl_Users(
 	UserCode int primary key identity(1,1) NOT NULL, 
