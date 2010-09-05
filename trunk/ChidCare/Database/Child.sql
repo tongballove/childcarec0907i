@@ -18,7 +18,7 @@ CREATE TABLE tbl_Users(
 	FeedBack nvarchar(100),
 	Status Bit NULL DEFAULT 1,
 )
---insert into tbl_Users values (1,1,'To Kim Dai','Admin','123456',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
+--insert into tbl_Users values (1,'To Kim Dai','Admin','123456',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
 --select * from tbl_Users
 GO
 
@@ -138,11 +138,11 @@ AS
 Go
 -- --NameofUser,Sex,Address,Birthday,Phone,Email,StartDate,Feedback
 --------- CREATE PROC spGetAllUser -------------------
-CREATE PROC  spGetAllUsers
+CREATE PROC  spGetAlltbl_Users
 
 AS	
 	select UserCode ,FullName,Account,Sex,Address,CONVERT(nvarchar(10),Birthday, 103) as 'Birthday',Phone,Email,
-	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback from tbl_Users where Status =1
+	CONVERT(nvarchar(10), StartDate, 103) as 'StartDate',Feedback,[Admin] from tbl_Users where Status =1
 
 GO
 --------- CREATE PROC spInserttbl_User ---------------
@@ -158,19 +158,17 @@ CREATE PROC spInserttbl_Users
 	@Email Nvarchar(200),
 	@StartDate Datetime,
 	@Feedback Nvarchar(100), 
-	@FunctionCode int
+	@Admin bit
 	
 AS
-	insert into  tbl_Users (FullName,Account,Password,Sex,Address,Birthday,Phone,Email,StartDate,Feedback)
-	values (
-	@FullName,@Account,
-	@Password,@Sex,@Address,@Birthday,@Phone,@Email,@StartDate,@Feedback)
+	insert into  tbl_Users (FullName,Account,Password,Sex,Address,Birthday,Phone,Email,StartDate,Feedback,[Admin])
+	values (@FullName,@Account,@Password,@Sex,@Address,@Birthday,@Phone,@Email,@StartDate,@Feedback,@Admin)
 
 GO
 -------	CREATE PROC spUpdateTbl_User ----------------
 
 
-CREATE PROC spUpdateTbl_Users
+CREATE PROC spUpdatetbl_Users
 	@UserCode int,
 	@FullName nvarchar(100),
 	@Sex Bit,
@@ -180,12 +178,13 @@ CREATE PROC spUpdateTbl_Users
 	@Email Nvarchar(200),
 	@StartDate Datetime,
 	@Feedback Nvarchar(100), 
-	@FunctionCode int
+	@Admin bit
 
 	
 AS
 	update tbl_Users
-	set FullName = @FullName ,Sex = @Sex,Address = @Address,Birthday = @Birthday,Phone = @Phone,Email = @Email,StartDate = @StartDate, Feedback  = @Feedback 
+	set FullName = @FullName ,Sex = @Sex,Address = @Address,Birthday = @Birthday,Phone = @Phone
+	,Email = @Email,StartDate = @StartDate, Feedback  = @Feedback, [Admin] = @Admin 
 	where UserCode = @UserCode
 GO		
 -------	CREATE PROC spDeleteTbl_User ---------------------------
