@@ -57,6 +57,7 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     }
 
     public frmAddOrEditUser(String tilte, int Code, RightPanel rightPanel) {
+        UserCode = 0;
         Title = tilte;
         RightPanel = rightPanel;
         UserCode = Code;
@@ -138,7 +139,7 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         plButtonLayout.setHorizontalGroup(
             plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plButtonLayout.createSequentialGroup()
-                .addContainerGap(433, Short.MAX_VALUE)
+                .addContainerGap(437, Short.MAX_VALUE)
                 .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(btReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,10 +187,10 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         jLabel10.setText("Password :");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12));
-        jLabel11.setText("Comfirm Password:");
+        jLabel11.setText("Comfirm Password :");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12));
-        jLabel12.setText("Start Date:");
+        jLabel12.setText("Start Date :");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel13.setText("Feedback :");
@@ -466,22 +467,21 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
     private void setText(int x) {
         txtAddress.setText("");
         txtEmail.setText("");
-        txtFullName.setText("");
         txtPhoneNumber.setText("");
         txtFeedback.setText("");
     }
 
     private void setText() {
         if (Title.equals("Edit")) {
-            if (UserCode >= 1) {
+            if (UserCode > 0) {
                 userbl = new UserBL();
                 rs = userbl.ExecuteSQLProc("spGet_Users", UserCode);
                 try {
                     if (rs.next()) {
                         UserCode = rs.getInt("UserCode");
                         txtUserName.setText(rs.getString("Account"));
-                        txtPass.setText("");
-                        txtComfirmPass.setText("");
+                        txtPass.setText(rs.getString("Password"));
+                        txtComfirmPass.setText(rs.getString("Password"));
                         txtFullName.setText(rs.getString("FullName"));
                         txtPhoneNumber.setText(rs.getString("Phone"));
                         txtAddress.setText(rs.getString("Address"));
@@ -494,12 +494,13 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                         } else {
                             rbFemale.setSelected(true);
                         }
-                        if (rs.getBoolean("")) {
+                        if (rs.getBoolean("Admin")) {
                             chbAdmin.setSelected(true);
                         }
                         txtUserName.setEditable(false);
                         txtPass.setEditable(false);
                         txtComfirmPass.setEditable(false);
+                        txtFullName.setEditable(false);
                         rbMale.setEnabled(false);
                         rbFemale.setEnabled(false);
                         txtBirthday.setEnabled(false);
@@ -509,7 +510,7 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Not find this ChildCode");
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(frmAddOrEditChild.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(frmAddOrEditChild.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else if (Title.equals("Add")) {
@@ -545,6 +546,8 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
         }
         if (chbAdmin.isSelected()) {
             Admin = "1";
+        }else{
+            Admin = "0";
         }
     }
 
