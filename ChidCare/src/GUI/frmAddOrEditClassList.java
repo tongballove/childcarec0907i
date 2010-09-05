@@ -10,6 +10,7 @@
  */
 package GUI;
 
+import DAL.ResulSetTableModel;
 import GUI.Component.RightPanel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,16 +19,19 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class frmClassList extends javax.swing.JPanel {
+public class frmAddOrEditClassList extends javax.swing.JPanel {
 
     private RightPanel rightpanel;
     private JFrame parent;
-    private frmAddOrEditClass Class;
+    private ResulSetTableModel rtm;
 
     /** Creates new form frmChildList */
-    public frmClassList(JFrame Parent) {
+    public frmAddOrEditClassList(JFrame Parent) {
         // rightpanel = rightPanel;
         parent = Parent;
+        rtm = new ResulSetTableModel();
+        rtm.setHostURL();
+        rtm.setQuery("Execute spGetalltbl_Class");
         initComponents();
     }
 
@@ -165,17 +169,7 @@ public class frmClassList extends javax.swing.JPanel {
 
         plTable.setBorder(javax.swing.BorderFactory.createTitledBorder("List of Class"));
 
-        tbClasslist.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tbClasslist.setModel(rtm);
         jScrollPane1.setViewportView(tbClasslist);
 
         javax.swing.GroupLayout plTableLayout = new javax.swing.GroupLayout(plTable);
@@ -296,16 +290,19 @@ public class frmClassList extends javax.swing.JPanel {
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         Event("Add");
+        getDataSource();
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         // TODO add your handling code here:
         Event("Edit");
+        getDataSource();
     }//GEN-LAST:event_btEditActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         Event("Delete");
+        getDataSource();
     }//GEN-LAST:event_btDeleteActionPerformed
 
     private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
@@ -327,16 +324,12 @@ public class frmClassList extends javax.swing.JPanel {
             }
         } else if (evt.equals("Edit")) {
             if ((tbClasslist.getSelectedRow()) != -1) {
-                Class = new frmAddOrEditClass(parent, true, "Edit Class - Child Care", "Edit of the Class");
-                Class.setCenterScreen();
-                Class.setVisible(true);
+                //
             } else {
                 CreateWarningDialog("Please select Class you want edit !", "Warning - Child Care");
             }
         } else if (evt.equals("Add")) {
-            Class = new frmAddOrEditClass(parent, true, "Add Class - Child Care", "Add of the Class");
-            Class.setCenterScreen();
-            Class.setVisible(true);
+            //
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
             if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
@@ -387,4 +380,11 @@ public class frmClassList extends javax.swing.JPanel {
     private javax.swing.JTextArea txtNote;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
+    private void getDataSource() {
+        rtm = new ResulSetTableModel();
+        rtm.setHostURL();
+        rtm.setQuery("Execute spGetalltbl_Class");
+        tbClasslist.setModel(rtm);
+    }
 }

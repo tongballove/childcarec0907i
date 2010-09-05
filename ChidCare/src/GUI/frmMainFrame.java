@@ -36,9 +36,6 @@ public class frmMainFrame extends javax.swing.JFrame {
     private ImageIcon add;
     private ImageIcon addsub;
     private JLabel ImageUser;
-    private frmAddOrEditActivite Activite;
-    private frmAddOrEditAgeGruop AgeGroup;
-    private frmAddOrEditClass Class;
     private ThreadTime tt;
     private final JLabel fullName;
     private final JLabel Username;
@@ -89,9 +86,9 @@ public class frmMainFrame extends javax.swing.JFrame {
         addLink(group, "Registered Users");
         addLink(group, "Registered Children");
         addLink(group, "Registered Nanny");
-        addLink(group, "Add Age Group");
-        addLink(group, "Add Activite");
-        addLink(group, "Add Class");
+        addLink(group, "Registered Age Group");
+        addLink(group, "Registered Activite");
+        addLink(group, "Registered Class");
 
         leftpanel = new JScrollPane(taskPane);
 
@@ -110,7 +107,7 @@ public class frmMainFrame extends javax.swing.JFrame {
 
     private void SetCombonentBase(String fullname, String username, String phone, String email, String address) {
 
-        ImageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_anonymous_64.png")));
+        ImageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/admin3.png")));
         ImageUser.setPreferredSize(new java.awt.Dimension(80, 80));
         fullName.setText("FullName: " + fullname);
         Username.setText("UserName: " + username);
@@ -419,29 +416,13 @@ public class frmMainFrame extends javax.swing.JFrame {
 
     private void addSubPane(String Title, String nameParentTab) {
 
-        if (Title.equals("Add Age Group")) {
-            AgeGroup = new frmAddOrEditAgeGruop(this, true, "Add Age Group - Child Care", "Add of Age Group");
-            AgeGroup.setCenterScreen();
-            AgeGroup.setVisible(true);
-        } else if (Title.equals("Add Activite")) {
-            Activite = new frmAddOrEditActivite(this, true, "Add Activite - Child Care", "Add of Activite");
-            Activite.setCenterScreen();
-            Activite.setVisible(true);
-        } else if (Title.equals("Add Class")) {
-            Class = new frmAddOrEditClass(this, true, "Add Class - Child Care", "Add of the Class");
-            Class.setCenterScreen();
-            Class.setVisible(true);
-        } else {
-
-
-            for (int i = 0; i < rightpanel.getCount(); i++) {
-                if (rightpanel.getTabTitle(Title, i)) {
-                    return;
-                }
+        for (int i = 0; i < rightpanel.getCount(); i++) {
+            if (rightpanel.getTabTitle(Title, i)) {
+                return;
             }
-
-            rightpanel.addSubPane(Title, 0);
         }
+
+        rightpanel.addSubPane(Title, 0);
 
     }
 
@@ -481,27 +462,27 @@ public class frmMainFrame extends javax.swing.JFrame {
                 }
             };
             parent.add(addUser);
-        } else if (Title.equals("Add Age Group")) {
+        } else if (Title.equals("Registered Age Group")) {
             Action addUser = new AbstractAction(Title, addsub) {
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    addSubPane("Add Age Group", "");
+                    addSubPane("AgeGroup List");
                 }
             };
             parent.add(addUser);
-        } else if (Title.equals("Add Activite")) {
+        } else if (Title.equals("Registered Activite")) {
             Action addUser = new AbstractAction(Title, addsub) {
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    addSubPane("Add Activite", "");
+                    addSubPane("Activite List");
                 }
             };
             parent.add(addUser);
-        } else if (Title.equals("Add Class")) {
+        } else if (Title.equals("Registered Class")) {
             Action addUser = new AbstractAction(Title, addsub) {
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    addSubPane("Add Class", "");
+                    addSubPane("Class List");
                 }
             };
             parent.add(addUser);

@@ -10,6 +10,7 @@
  */
 package GUI;
 
+import GUI.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,13 +18,12 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class frmActivitiesList extends javax.swing.JPanel {
+public class frmAddOrEditAgeGroupList extends javax.swing.JPanel {
 
     private JFrame parent;
-    private frmAddOrEditActivite activite;
 
     /** Creates new form frmChildList */
-    public frmActivitiesList(JFrame Parent) {
+    public frmAddOrEditAgeGroupList(JFrame Parent) {
         parent = Parent;
         initComponents();
     }
@@ -44,12 +44,19 @@ public class frmActivitiesList extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btSearch = new javax.swing.JButton();
         plTable = new javax.swing.JPanel();
+        plTable1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbActivities = new javax.swing.JTable();
+        tbListGroups = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtAgeGroup = new javax.swing.JTextField();
+        txtChargesPerGroup = new javax.swing.JTextField();
         plButton = new javax.swing.JPanel();
         btAdd = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
+        btViewDetails = new javax.swing.JButton();
 
         cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -75,7 +82,7 @@ public class frmActivitiesList extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(20, 20, 20)
                 .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(cbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -96,9 +103,11 @@ public class frmActivitiesList extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        plTable.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List of Activities", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
+        plTable.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Age Group information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
 
-        tbActivities.setModel(new javax.swing.table.DefaultTableModel(
+        plTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("List of Age Groups"));
+
+        tbListGroups.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -109,19 +118,76 @@ public class frmActivitiesList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbActivities);
+        jScrollPane1.setViewportView(tbListGroups);
+
+        javax.swing.GroupLayout plTable1Layout = new javax.swing.GroupLayout(plTable1);
+        plTable1.setLayout(plTable1Layout);
+        plTable1Layout.setHorizontalGroup(
+            plTable1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+        );
+        plTable1Layout.setVerticalGroup(
+            plTable1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plTable1Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Add of Age Group"));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Child age group :");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Charges as per the group :");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtAgeGroup, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtChargesPerGroup, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAgeGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtChargesPerGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout plTableLayout = new javax.swing.GroupLayout(plTable);
         plTable.setLayout(plTableLayout);
         plTableLayout.setHorizontalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+            .addGroup(plTableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(plTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         plTableLayout.setVerticalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plTableLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(23, 23, 23)
+                .addGroup(plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(plTable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-16x16.png"))); // NOI18N
@@ -148,15 +214,25 @@ public class frmActivitiesList extends javax.swing.JPanel {
             }
         });
 
+        btViewDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Windows-View-Detail-16x16.png"))); // NOI18N
+        btViewDetails.setText("View Details");
+        btViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btViewDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plButtonLayout = new javax.swing.GroupLayout(plButton);
         plButton.setLayout(plButtonLayout);
         plButtonLayout.setHorizontalGroup(
             plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plButtonLayout.createSequentialGroup()
-                .addContainerGap(544, Short.MAX_VALUE)
+                .addContainerGap(432, Short.MAX_VALUE)
                 .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(btViewDetails)
                 .addGap(18, 18, 18)
                 .addComponent(btDelete)
                 .addGap(37, 37, 37))
@@ -166,9 +242,10 @@ public class frmActivitiesList extends javax.swing.JPanel {
             .addGroup(plButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btDelete)
                     .addComponent(btAdd)
                     .addComponent(btEdit)
-                    .addComponent(btDelete))
+                    .addComponent(btViewDetails))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -195,7 +272,7 @@ public class frmActivitiesList extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(59, 59, 59)
                     .addComponent(plTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(63, Short.MAX_VALUE)))
+                    .addContainerGap(104, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -214,36 +291,65 @@ public class frmActivitiesList extends javax.swing.JPanel {
         Event("Edit");
     }//GEN-LAST:event_btEditActionPerformed
 
+    private void btViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btViewDetailsActionPerformed
+        // TODO add your handling code here:
+        Event("View");
+    }//GEN-LAST:event_btViewDetailsActionPerformed
+
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         Event("Delete");
     }//GEN-LAST:event_btDeleteActionPerformed
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAdd;
+    private javax.swing.JButton btDelete;
+    private javax.swing.JButton btEdit;
+    private javax.swing.JButton btSearch;
+    private javax.swing.JButton btViewDetails;
+    private javax.swing.JComboBox cbSearch;
+    private javax.swing.JComboBox cbSort;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel plButton;
+    private javax.swing.JPanel plSearchAndSort;
+    private javax.swing.JPanel plTable;
+    private javax.swing.JPanel plTable1;
+    private javax.swing.JTable tbListGroups;
+    private javax.swing.JTextField txtAgeGroup;
+    private javax.swing.JTextField txtChargesPerGroup;
+    private javax.swing.JTextField txtSearch;
+    // End of variables declaration//GEN-END:variables
 
     private void Event(String evt) {
         if (evt.equals("Delete")) {
-            if ((tbActivities.getSelectedRow()) != -1) {
+            if ((tbListGroups.getSelectedRow()) != -1) {
 
-                int i = CreateOptionDialog("Are you sure want delete this Activite ?", "Delete Activite - Child Care");
+                int i = CreateOptionDialog("Are you sure want delete this Group ?", "Delete Group - Child Care");
 
                 if (i == 1) {
                     // TODO add your handling code here:
                 }
             } else {
-                CreateWarningDialog("Please select activite you want delete !", "Warning - Child Care");
+                CreateWarningDialog("Please select Group you want delete !", "Warning - Child Care");
             }
         } else if (evt.equals("Edit")) {
-            if ((tbActivities.getSelectedRow()) != -1) {
-                activite = new frmAddOrEditActivite(parent, true, "Edit Activite - Child Care", "Edit of Activite");
-                activite.setCenterScreen();
-                activite.setVisible(true);
+            if ((tbListGroups.getSelectedRow()) != -1) {
+                //
             } else {
-                CreateWarningDialog("Please select activite you want edit !", "Warning - Child Care");
+                CreateWarningDialog("Please select Group you want edit !", "Warning - Child Care");
             }
         } else if (evt.equals("Add")) {
-            activite = new frmAddOrEditActivite(parent, true, "Add Activite - Child Care", "Add of Activite");
-            activite.setCenterScreen();
-            activite.setVisible(true);
-        } else {
+            //
+        } else if (evt.equals("View")) {
+            if ((tbListGroups.getSelectedRow()) != -1) {
+                // TODO add your handling code here:
+            } else {
+                CreateWarningDialog("Please select Group you want view !", "Warning - Child Care");
+            }
+        } else if (evt.equals("Sort")) {
             // TODO add your handling code here:
         }
     }
@@ -257,19 +363,4 @@ public class frmActivitiesList extends javax.swing.JPanel {
         int confirm = JOptionPane.showOptionDialog(this, info, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         return confirm;
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAdd;
-    private javax.swing.JButton btDelete;
-    private javax.swing.JButton btEdit;
-    private javax.swing.JButton btSearch;
-    private javax.swing.JComboBox cbSearch;
-    private javax.swing.JComboBox cbSort;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel plButton;
-    private javax.swing.JPanel plSearchAndSort;
-    private javax.swing.JPanel plTable;
-    private javax.swing.JTable tbActivities;
-    private javax.swing.JTextField txtSearch;
-    // End of variables declaration//GEN-END:variables
 }

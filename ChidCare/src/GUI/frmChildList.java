@@ -245,6 +245,8 @@ public class frmChildList extends javax.swing.JPanel {
                 if (i == 0) {
                     // TODO add your handling code here:
                     ChildBL chilBL = new ChildBL(evt, ChildCode);
+                    chilBL.setStatement();
+                    chilBL.ExecuteSQLProc();
                 }
             } else {
                 CreateWarningDialog("Please select activite you want delete !", "Warning - Child Care");
