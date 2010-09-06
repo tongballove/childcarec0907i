@@ -13,6 +13,7 @@ package GUI;
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
 import DAL.ResulSetTableModel;
+import DAL.CheckValid;
 
 /**
  *
@@ -262,25 +263,47 @@ public class frmUserList extends javax.swing.JPanel {
             rightpanel.addSubPane("Add User");
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
-            if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+            CheckValid S = new CheckValid();
+            if(cbSearch.getSelectedIndex() == 0){
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            } else {
-                // TODO add your handling code here:
             }
+            else if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+                txtSearch.requestFocus();
+            }
+            else if(cbSearch.getSelectedIndex() == 1){
+                String sql ="spSearchNameOfUser_tbl_User '"+txtSearch.getText()+"'";
+                load(sql);
+            }
+            else if(cbSearch.getSelectedIndex() == 2){
+                if(!S.checkDate(txtSearch.getText())){
+                    CreateWarningDialog("Please Enter Fomat Datetime mm/dd/yy","For mat");
+                    return;
+                }else{
+                    String sql ="spSearchStartDate_tbl_User '"+txtSearch.getText()+"'";
+                    load(sql);
+                }
+            }
+            else if(cbSearch.getSelectedIndex() == 3){
+                String sql = "spSearchAccounttbl_User '"+txtSearch.getText()+"'";
+                load(sql);
+            }
+            
         } else if (evt.equals("Sort")) {
            if(cbSort.getSelectedIndex() == 1){
-                String sql ="spSortNameOfUsertbl_User";
+                String sql =" spSortNameOfUsertbl_User";
                 load(sql);
            }
-           if(cbSort.getSelectedIndex() == 2){
-                String sql ="spSortStartDatetbl_User";
+           else if(cbSort.getSelectedIndex() == 2){
+                String sql ="Execute spSortStartDatetbl_User";
                 load(sql);
            }
         }
     }
     public void load(String sql){
         ResulSetTableModel T = new ResulSetTableModel();
-        T.setQuery(sql);
+         T.setHostURL();
+         T.setQuery(sql);
         tbUser.setModel(T);
     }
 

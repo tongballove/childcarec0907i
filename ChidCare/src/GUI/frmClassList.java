@@ -85,7 +85,7 @@ public class frmClassList extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(20, 20, 20)
                 .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(cbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,13 +125,16 @@ public class frmClassList extends javax.swing.JPanel {
         plTable.setLayout(plTableLayout);
         plTableLayout.setHorizontalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plTableLayout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                .addContainerGap())
         );
         plTableLayout.setVerticalGroup(
             plTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plTableLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plTableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
         );
 
         btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-16x16.png"))); // NOI18N
@@ -163,7 +166,7 @@ public class frmClassList extends javax.swing.JPanel {
         plButtonLayout.setHorizontalGroup(
             plButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plButtonLayout.createSequentialGroup()
-                .addContainerGap(544, Short.MAX_VALUE)
+                .addContainerGap(564, Short.MAX_VALUE)
                 .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,16 +261,16 @@ public class frmClassList extends javax.swing.JPanel {
             Class = new frmAddOrEditClass(parent, true, "Add Class - Child Care", "Add of the Class");
             Class.setCenterScreen();
             Class.setVisible(true);
+            
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
-            if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+            if(cbSearch.getSelectedIndex() == 0){
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            } else if(cbSearch.getSelectedIndex() == 0) {
-                // TODO add your handling code here:
-               CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-
             }
-            else {
+            else if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+            }
+            else  if (cbSearch.getSelectedIndex() == 1){
                 String sql ="spSearchClassNametbl_Class '"+txtSearch.getText()+"'";
                 load(sql);
             }
@@ -280,6 +283,7 @@ public class frmClassList extends javax.swing.JPanel {
     }
     public void load(String sql){
         ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setHostURL();
         rm.setQuery(sql);
         tbClasslist.setModel(rm);
     }

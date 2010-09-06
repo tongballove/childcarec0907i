@@ -12,6 +12,8 @@ package GUI;
 
 import GUI.Component.RightPanel;
 import javax.swing.JOptionPane;
+import DAL.ResulSetTableModel;
+import DAL.CheckValid;
 
 /**
  *
@@ -38,7 +40,7 @@ public class frmNannyList extends javax.swing.JPanel {
 
         plSearchAndSort = new javax.swing.JPanel();
         cbSort = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        cbSearch = new javax.swing.JComboBox();
         txtSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btSearch = new javax.swing.JButton();
@@ -50,14 +52,14 @@ public class frmNannyList extends javax.swing.JPanel {
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--------- Select ----------", "Name" }));
         cbSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSortActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--- Select --", "Name", "ChildAssigned" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -82,7 +84,7 @@ public class frmNannyList extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(btSearch)
                 .addGap(22, 22, 22))
@@ -95,7 +97,7 @@ public class frmNannyList extends javax.swing.JPanel {
                     .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSearch))
                 .addContainerGap(6, Short.MAX_VALUE))
         );
@@ -257,22 +259,46 @@ public class frmNannyList extends javax.swing.JPanel {
 
             rightpanel.addSubPane("Add Nanny");
         } else if (evt.equals("Search")) {
-            // TODO add your handling code here:
-            if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+            // TODO add your handling code here
+            CheckValid T = new CheckValid();
+            if(cbSearch.getSelectedIndex() == 0){
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            } else {
-                // TODO add your handling code here:
+
+
             }
+            else if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
+                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+                 txtSearch.requestFocus();
+            } 
+            else if(cbSearch.getSelectedIndex() == 1){
+                // TODO add your handling code here:
+                String sql ="spSearchNametbl_Nanny'"+txtSearch.getText()+"'";
+                load(sql);
+            }
+            else if(cbSearch.getSelectedIndex() == 2){
+                if(!T.CheckNumber(txtSearch.getText())){
+                    CreateOptionDialog("Please Enter Number activite you want search !", "Warning - Child Care");
+                    return;
+                }
+                else{
+                    String sql ="spSearchChildAssignedtbl_Nanny'"+txtSearch.getText()+"'";
+                    load(sql);
+                }
+            }
+            
         } else if (evt.equals("Sort")) {
-            // TODO add your handling code here:
-//            if ((tbNannyList.getSelectedRow()) != -1) {
-//                // TODO add your handling code here:
-//            } else {
-//                CreateWarningDialog("Please select activite you want view !", "Warning - Child Care");
-//            }
+           if(cbSort.getSelectedIndex() == 1){
+                String sql ="spSortNametbl_Nanny";
+                load(sql);
+           }
         }
     }
-
+    public void load(String sql){
+        ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setHostURL();
+        rm.setQuery(sql);
+        tbNannyList.setModel(rm);
+    }
     private void CreateWarningDialog(String info, String title) {
         JOptionPane.showMessageDialog(this, info, title, JOptionPane.WARNING_MESSAGE);
     }
@@ -287,8 +313,8 @@ public class frmNannyList extends javax.swing.JPanel {
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btEdit;
     private javax.swing.JButton btSearch;
+    private javax.swing.JComboBox cbSearch;
     private javax.swing.JComboBox cbSort;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel plButton;

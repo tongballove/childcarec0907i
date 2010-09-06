@@ -285,6 +285,7 @@ public class frmActivitiesList extends javax.swing.JPanel {
 
     public void load(String sql){
         ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setHostURL();
         rm.setQuery(sql);
         tbActivities.setModel(rm);
     }

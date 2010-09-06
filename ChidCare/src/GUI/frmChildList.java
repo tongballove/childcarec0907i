@@ -290,13 +290,14 @@ public class frmChildList extends javax.swing.JPanel {
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
             CheckValid T = new CheckValid();
-            if((txtSearch.getText().equals("")) || (txtSearch.getText() == null) ){
+            if(cbSearch.getSelectedIndex() == 0){
+                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
+            }
+            else  if((txtSearch.getText().equals("")) || (txtSearch.getText() == null) ){
                 CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
                 txtSearch.requestFocus();
             }
-            else if(cbSearch.getSelectedIndex() == 0){
-                CreateWarningDialog("Please select activite you want search !", "Warning - Child Care");
-            }
+           
             else if(cbSearch.getSelectedIndex() == 1){
                  // TODO add your handling code here:
              
@@ -321,7 +322,7 @@ public class frmChildList extends javax.swing.JPanel {
             }
             else if(cbSearch.getSelectedIndex() == 4){
                 if(!T.checkDate(txtSearch.getText())){
-                     CreateWarningDialog("Please Enter Fomat Datetime mm/dd/yy","");
+                     CreateWarningDialog("Please Enter Fomat Datetime mm/dd/yy","For mat");
                      txtSearch.requestFocus();
                      return;
                 }
@@ -366,6 +367,7 @@ public class frmChildList extends javax.swing.JPanel {
     }
     public void load(String sql){
         ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setHostURL();
         rm.setQuery(sql);
         tbChildList.setModel(rtm);
     }

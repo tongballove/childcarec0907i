@@ -15,7 +15,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
-
+import DAL.CheckValid;
+import GUI.*;
+import DAL.MyConnection;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Admin
@@ -152,8 +155,34 @@ public class frmAddOrEditClass extends javax.swing.JDialog {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         // TODO add your handling code here:
+        int number=0;
+        CheckValid T = new CheckValid();
+        if(!T.isempy(txtClassName.getText())){
+          //  CreateWarningDialog("Please select Group you want view !", "Warning - Child Care");
+           JOptionPane.showMessageDialog(this, "Please select Class you want view !");
+           txtClassName.requestFocus();
+           return;
+        }
+        
+        else if(!T.isempy(txtNote.getText())){
+            JOptionPane.showMessageDialog(this, "Please select Class you want view !");
+            txtNote.requestFocus();
+            return;
+        }
+        else{
+            MyConnection con = new MyConnection();
+            String a = (String) cbAgeGroup.getSelectedItem();
+            String sql ="spInserttbl_Class '"+txtClassName.getText()+"','"+a+"','"+txtNote.getText()+"'";
+            number = con.ExecuteSQLUpdate(sql);
+            if(number == 1){
+                JOptionPane.showMessageDialog(this, "Save Success fully");
+            }
+
+        }
+
 }//GEN-LAST:event_btSaveActionPerformed
 
+    
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         // TODO add your handling code here:
         this.dispose();

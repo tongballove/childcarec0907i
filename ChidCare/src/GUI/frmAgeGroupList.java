@@ -13,7 +13,8 @@ package GUI;
 import GUI.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import DAL.ResulSetTableModel;
+import DAL.CheckValid;
 /**
  *
  * @author Admin
@@ -53,9 +54,14 @@ public class frmAgeGroupList extends javax.swing.JPanel {
         btDelete = new javax.swing.JButton();
         btViewDetails = new javax.swing.JButton();
 
-        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "AgeGroup" }));
+        cbSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSortActionPerformed(evt);
+            }
+        });
 
-        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "AgeGroup" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/webdev-search-16x16.png"))); // NOI18N
         jLabel1.setText("Sort by:");
@@ -220,6 +226,7 @@ public class frmAgeGroupList extends javax.swing.JPanel {
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         Event("Add");
+        
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
@@ -236,6 +243,12 @@ public class frmAgeGroupList extends javax.swing.JPanel {
         // TODO add your handling code here:
         Event("Delete");
     }//GEN-LAST:event_btDeleteActionPerformed
+
+    private void cbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSortActionPerformed
+        // TODO add your handling code here:
+        Event("Sort");
+    }//GEN-LAST:event_cbSortActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btDelete;
@@ -283,11 +296,45 @@ public class frmAgeGroupList extends javax.swing.JPanel {
             } else {
                 CreateWarningDialog("Please select Group you want view !", "Warning - Child Care");
             }
-        } else if (evt.equals("Sort")) {
+        }
+        else if(evt.equals("Search")){
+            CheckValid S = new CheckValid();
+            if(cbSearch.getSelectedIndex() == 0){
+                 CreateWarningDialog("Please select Group you want view !", "Warning - Child Care");
+
+            }
+            else if(!S.isempy(txtSearch.getText())){
+                CreateWarningDialog("Please select Group you want view !", "Warning - Child Care");
+                txtSearch.requestFocus();
+            }
+            else if(cbSearch.getSelectedIndex() == 1){
+                  CheckValid T = new CheckValid();
+                if(!T.CheckNumber(txtSearch.getText())){
+                    CreateWarningDialog("Please Enter is Number you want View !","Warning - Child Care");
+                    txtSearch.requestFocus();
+                }
+                else{
+                    String sql ="spSearchAgeGrouptbl_AgeGroup '"+txtSearch.getText()+"'";
+                    load(sql);
+                }
+            }
+
+        }
+        else if (evt.equals("Sort")) {
             // TODO add your handling code here:
+            if(cbSort.getSelectedIndex() == 1){
+                String sql ="spSortAgeGrouptbl_AgeGroup";
+                load(sql);
+            }
+
         }
     }
-
+    public void load(String sql){
+        ResulSetTableModel rm = new ResulSetTableModel();
+        rm.setHostURL();
+        rm.setQuery(sql);
+        tbListGroups.setModel(rm);
+    }
     private void CreateWarningDialog(String info, String title) {
         JOptionPane.showMessageDialog(this, info, title, JOptionPane.WARNING_MESSAGE);
     }

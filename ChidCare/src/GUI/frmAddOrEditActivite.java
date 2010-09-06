@@ -15,6 +15,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
+import DAL.CheckValid;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -161,6 +163,11 @@ public class frmAddOrEditActivite extends javax.swing.JDialog {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         // TODO add your handling code here:
+        CheckValid T = new CheckValid();
+        if(!T.isempy(txtNameAcitivite.getText())){
+            //JOptionPane.showMessageDialog(this, "Filde Name Activates");
+        }
+            
 }//GEN-LAST:event_btSaveActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed

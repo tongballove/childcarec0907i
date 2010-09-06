@@ -158,8 +158,6 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel7.setText("Sex");
 
-        txtBirthday.setDateFormatString("MMMM/dd/yyyy");
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel8.setText("Birthday");
 
@@ -380,6 +378,12 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("History disease"));
 
+        txtDoctorName5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDoctorName5ActionPerformed(evt);
+            }
+        });
+
         jLabel29.setFont(new java.awt.Font("Times New Roman", 0, 14));
         jLabel29.setText("Doctor Name");
 
@@ -507,6 +511,10 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btCloseActionPerformed
+
+    private void txtDoctorName5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoctorName5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDoctorName5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
