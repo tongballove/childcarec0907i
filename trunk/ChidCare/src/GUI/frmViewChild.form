@@ -66,9 +66,9 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPanel9" alignment="0" max="32767" attributes="3"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel2" alignment="0" max="32767" attributes="3"/>
+                              <Component id="jPanel9" alignment="0" min="-2" max="-2" attributes="3"/>
                           </Group>
                       </Group>
                   </Group>
@@ -97,17 +97,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel2" max="32767" attributes="3"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel4" min="-2" max="-2" attributes="3"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jPanel2" alignment="0" min="0" pref="212" max="32767" attributes="3"/>
+                      <Component id="jPanel4" alignment="0" max="32767" attributes="3"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -150,6 +152,10 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                              <Component id="lbLName" pref="229" max="32767" attributes="1"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
                               <Component id="lbFName" pref="229" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -165,8 +171,8 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lbBirthday" pref="227" max="32767" attributes="0"/>
                                           <Component id="lbAddress" alignment="0" pref="227" max="32767" attributes="0"/>
-                                          <Component id="lbBirthday" alignment="0" pref="227" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -176,15 +182,11 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbSex" alignment="0" pref="227" max="32767" attributes="1"/>
+                                          <Component id="lbSex" pref="227" max="32767" attributes="1"/>
                                           <Component id="lbAgeGroup" alignment="0" pref="227" max="32767" attributes="1"/>
                                       </Group>
                                   </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                              <Component id="lbLName" pref="229" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -197,32 +199,32 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbFName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbFName" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbLName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbLName" alignment="3" min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbSex" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbSex" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbAgeGroup" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbAgeGroup" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbAddress" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbAddress" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbBirthday" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbBirthday" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -364,18 +366,6 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lbPEmail" max="32767" attributes="1"/>
-                                  <Component id="lbPPhone" alignment="0" pref="186" max="32767" attributes="1"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
@@ -383,8 +373,20 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbPWorkNumber" pref="186" max="32767" attributes="0"/>
                                   <Component id="lbPName" alignment="0" pref="186" max="32767" attributes="0"/>
-                                  <Component id="lbPWorkNumber" alignment="0" pref="186" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbPEmail" pref="186" max="32767" attributes="1"/>
+                                  <Component id="lbPPhone" alignment="0" pref="186" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                       </Group>
@@ -398,24 +400,24 @@
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbPName" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbPName" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbPWorkNumber" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbPWorkNumber" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbPPhone" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbPPhone" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbPEmail" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbPEmail" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -525,11 +527,11 @@
                           <Component id="jLabel34" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lbDateReceived" alignment="0" pref="228" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lbNextOfKinContact" pref="228" max="32767" attributes="0"/>
+                          <Component id="lbNoteAboutChild" pref="228" max="32767" attributes="0"/>
+                          <Component id="lbDateReceived" pref="228" max="32767" attributes="0"/>
                           <Component id="lbRegistrationDate" alignment="0" pref="228" max="32767" attributes="0"/>
-                          <Component id="lbNoteAboutChild" alignment="0" pref="228" max="32767" attributes="0"/>
-                          <Component id="lbNextOfKinContact" alignment="0" pref="228" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -541,24 +543,24 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbNextOfKinContact" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbNextOfKinContact" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbNoteAboutChild" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbNoteAboutChild" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbRegistrationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbRegistrationDate" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbDateReceived" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbDateReceived" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -667,8 +669,8 @@
                           <Component id="jLabel31" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lbDocterName" alignment="0" pref="194" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lbDocterName" pref="194" max="32767" attributes="0"/>
                           <Component id="lbPasIllness" alignment="0" pref="194" max="32767" attributes="0"/>
                           <Component id="lbCurrentMedication" alignment="0" pref="194" max="32767" attributes="0"/>
                       </Group>
@@ -682,17 +684,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCurrentMedication" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbCurrentMedication" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbPasIllness" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbPasIllness" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbDocterName" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbDocterName" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
