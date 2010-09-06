@@ -272,7 +272,7 @@ public class frmActivitiesList extends javax.swing.JPanel {
                 CreateWarningDialog(evt, evt);
                 txtSearch.requestFocus();
             }
-            else{
+            else if(cbSearch.getSelectedIndex() == 1){
                 String sql ="spSearchNameActivetbl_Activities '"+txtSearch.getText()+"'";
                 load(sql);
             }
