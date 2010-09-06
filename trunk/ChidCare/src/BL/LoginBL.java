@@ -27,7 +27,7 @@ public class LoginBL {
 
     public ResultSet getResult() {
         connec = new MyConnection();
-        this.sql = "Execute spGetLogin '"+ User +"', '"+ Pass +"'";
+        this.sql = "Execute spGet_Login '"+ User +"', '"+ Pass +"'";
         Result = connec.ExecuteSQLResult(sql);
         return Result;
     }

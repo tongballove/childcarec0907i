@@ -18,7 +18,8 @@ CREATE TABLE tbl_Users(
 	FeedBack nvarchar(100),
 	Status Bit NULL DEFAULT 1,
 )
---insert into tbl_Users values (1,'To Kim Dai','Admin','123456',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
+-- PassWord Cua Admin la: 123456
+--insert into tbl_Users values (1,'To Kim Dai','Admin','E10ADC3949BA59ABBE56E057F20F883E',1,'Ha Noi','12/31/2010',1234,'daitk','12/31/2010','abc',1)
 --select * from tbl_Users
 GO
 
@@ -123,19 +124,19 @@ AS
 GO
 -------- CREATE SPChangePassword---------------------
 CREATE PROC spChangePassword 
-	@Account nvarchar(30),
+	@UserCode int,
 	@password nvarchar(100)
 AS
-	update tbl_Users set Password = @password where 
-	Account = @Account
+	update tbl_Users set [Password] = @password where 
+	UserCode = @UserCode
 GO
-CREATE PROC  spGetLogin
+CREATE PROC  spGet_Login
 	@UserName nvarchar(30),
-	@Pass nvarchar(30)
+	@Pass nvarchar(100)
 AS	
-	select FullName, Account, Phone, Email, [Address] from tbl_Users
-	where Account = @UserName and Password = @Pass and Status =1
---execute spGetLogin 'Admin','123456'
+	select UserCode, [Password], FullName, Account, Phone, Email, [Address], [Admin] from tbl_Users
+	where Account = @UserName and [Password] = @Pass and Status =1
+--execute spGet_Login 'Admin','E10ADC3949BA59ABBE56E057F20F883E'
 Go
 --------- CREATE PROC spGet_User -------------------
 CREATE PROC spGet_Users

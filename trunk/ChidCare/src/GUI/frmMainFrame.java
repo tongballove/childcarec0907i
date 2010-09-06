@@ -37,19 +37,26 @@ public class frmMainFrame extends javax.swing.JFrame {
     private ImageIcon addsub;
     private JLabel ImageUser;
     private ThreadTime tt;
+    private int UserCode;
+    private String PassWord;
     private final JLabel fullName;
     private final JLabel Username;
     private final JLabel Phone;
     private final JLabel Email;
     private final JLabel Address;
+    private frmChangePassword changePass;
 
     /** Creates new form MainFrame */
-    public frmMainFrame(String fullname, String username, String phone, String email, String address, boolean admin) {
+    public frmMainFrame(int userCode, String passWord, String fullname, String username, String phone, String email, String address, boolean admin) {
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
         }
+
+        UserCode = userCode;
+
+        PassWord = passWord;
 
         ImageUser = new JLabel();
 
@@ -287,6 +294,11 @@ public class frmMainFrame extends javax.swing.JFrame {
         mnEdit.add(mniEditPersionnal);
 
         mniChangePass.setText("Change password");
+        mniChangePass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniChangePassActionPerformed(evt);
+            }
+        });
         mnEdit.add(mniChangePass);
 
         jMenuBar1.add(mnEdit);
@@ -366,6 +378,12 @@ public class frmMainFrame extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_mniLogoutActionPerformed
+
+    private void mniChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChangePassActionPerformed
+        // TODO add your handling code here:
+        changePass = new frmChangePassword(this, true, UserCode, PassWord);
+        changePass.setVisible(true);
+    }//GEN-LAST:event_mniChangePassActionPerformed
     /**
      * @param args the command line arguments
     //     */
