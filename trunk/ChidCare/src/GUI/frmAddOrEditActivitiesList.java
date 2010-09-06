@@ -10,6 +10,9 @@
  */
 package GUI;
 
+import BL.ClassBL;
+import DAL.ResulSetTableModel;
+import DAL.ResultSetComboboxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -20,10 +23,22 @@ import javax.swing.JOptionPane;
 public class frmAddOrEditActivitiesList extends javax.swing.JPanel {
 
     private JFrame parent;
-
+    private ResulSetTableModel rtm;
+    private ClassBL classbl;
+    private int AciviteCode;
+    private String NameActivite;
+    private String Rates;
+    private String Note;
+    private String Evt;
+    private String[] model;
     /** Creates new form frmChildList */
     public frmAddOrEditActivitiesList(JFrame Parent) {
+        
         parent = Parent;
+        rtm = new ResulSetTableModel();
+        rtm.setHostURL();
+        rtm.setQuery("Execute spGetAlltbl_Activitie");
+        Evt = "Add";
         initComponents();
     }
 
@@ -108,17 +123,7 @@ public class frmAddOrEditActivitiesList extends javax.swing.JPanel {
 
         plTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("List of Activities"));
 
-        tbActivities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tbActivities.setModel(rtm);
         jScrollPane1.setViewportView(tbActivities);
 
         javax.swing.GroupLayout plTable1Layout = new javax.swing.GroupLayout(plTable1);
@@ -140,7 +145,7 @@ public class frmAddOrEditActivitiesList extends javax.swing.JPanel {
         txtNote.setRows(5);
         jScrollPane2.setViewportView(txtNote);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel3.setText("Note :");
 
         txtNameAcitivite.addActionListener(new java.awt.event.ActionListener() {
@@ -149,10 +154,10 @@ public class frmAddOrEditActivitiesList extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel2.setText("Rates :");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel4.setText("Name Activite :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -314,9 +319,10 @@ public class frmAddOrEditActivitiesList extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameAcitiviteActionPerformed
 
     private void Event(String evt) {
+        AciviteCode = 0;
         if (evt.equals("Delete")) {
             if ((tbActivities.getSelectedRow()) != -1) {
-
+                AciviteCode = Integer.parseInt(tbActivities.getValueAt(tbActivities.getSelectedRow(), 0).toString());
                 int i = CreateOptionDialog("Are you sure want delete this Activite ?", "Delete Activite - Child Care");
 
                 if (i == 1) {

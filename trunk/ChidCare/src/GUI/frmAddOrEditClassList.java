@@ -13,8 +13,6 @@ package GUI;
 import BL.ClassBL;
 import DAL.ResulSetTableModel;
 import DAL.ResultSetComboboxModel;
-import GUI.Component.RightPanel;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,7 +23,6 @@ import javax.swing.JOptionPane;
  */
 public class frmAddOrEditClassList extends javax.swing.JPanel {
 
-    private RightPanel rightpanel;
     private JFrame parent;
     private ResulSetTableModel rtm;
     private ClassBL classbl;

@@ -88,6 +88,7 @@ CREATE TABLE tbl_Activities(
 	ActiveCode int primary key identity(1,1),
 	NameActive Nvarchar(50),----/---
 	Rates Money ,
+	Note nvarchar(200),
 	Status Bit NULL DEFAULT 1,
 )
 GO
@@ -442,10 +443,10 @@ AS
 GO
 -------------- CREATE PROC Table Table tbl_Activitie -----------------------------------------------------------
 GO	
----  CREATE PROC spGetAlltbl_Activitie ----------
-CREATE PROC spGetAlltbl_Activitie	
+---  CREATE PROC spGetAlltbl_Activities ----------
+CREATE PROC spGetAlltbl_Activities
 AS
-	select ActiveCode,NameActive,Rates from tbl_Activitie where Status =1
+	select ActiveCode, NameActive, Rates, Note from tbl_Activities where Status =1
 GO
 -- CRATE PROC spInserttbl_Activitie -------------
 CREATE PROC spInserttbl_Activitie
