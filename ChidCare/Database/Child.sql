@@ -414,37 +414,30 @@ AS
 GO
 --------- CREATE PROC spInserttbl_Class --------
 CREATE PROC spInserttbl_Class
+	@ClassName nvarchar(50),
 	@GroupAgeCode int,
-	@Note int,
-	@ClassName nvarchar(50)
+	@Note nvarchar(200)
 AS
 	insert into tbl_Class (GroupAgeCode,Note,ClassName) values (@GroupAgeCode,@Note,@ClassName)
-GO
----------- CREATE PROC spIserttbl_Class ---------
-CREATE PROC spIserttbl_Class
-	@GroupAgeCode int,
-	@Note int,
-	@ClassName nvarchar(50)
-AS
-	insert into tbl_Class (GroupAgeCode,Note,ClassName) values (@GroupAgeCode ,@Note ,@ClassName)
+
 GO
 
 ----------- CREATE PROC spUpdatetbl_Class -------
 CREATE PROC spUpdatetbl_Class
 	@ClassCode int,
+	@ClassName nvarchar(50),
 	@GroupAgeCode int,
-	@Note int,
-	@ClassName nvarchar(50)
+	@Note nvarchar(200)
 AS
-	update tbl_Class set GroupAgeCode = @GroupAgeCode,Note = @Note,ClassName = @ClassName
+	update tbl_Class set ClassName = @ClassName, GroupAgeCode = @GroupAgeCode, Note = @Note 
 	where ClassCode = @ClassCode
+-- Execute spUpdatetbl_Class 1, 'C0907I', 1, 'Good Good'
 GO
 ------------ CREATE PROC spDeletetbl_Class -------
 CREATE PROC spDeletetbl_Class
-	@ClassCode int,
-	@Status Bit
+	@ClassCode int
 AS
-	update tbl_Class set Status = @Status where ClassCode = @ClassCode
+	update tbl_Class set Status = 0 where ClassCode = @ClassCode
 
  
 GO

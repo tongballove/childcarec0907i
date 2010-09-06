@@ -10,8 +10,12 @@
  */
 package GUI;
 
+import BL.ClassBL;
 import DAL.ResulSetTableModel;
+import DAL.ResultSetComboboxModel;
 import GUI.Component.RightPanel;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -24,14 +28,25 @@ public class frmAddOrEditClassList extends javax.swing.JPanel {
     private RightPanel rightpanel;
     private JFrame parent;
     private ResulSetTableModel rtm;
+    private ClassBL classbl;
+    private int ClassCode;
+    private String ClassName;
+    private int AgeGroup;
+    private String Note;
+    private String Evt;
+    private ResultSetComboboxModel cbm;
+    private String[] model;
 
     /** Creates new form frmChildList */
     public frmAddOrEditClassList(JFrame Parent) {
         // rightpanel = rightPanel;
+        cbm = new ResultSetComboboxModel();
         parent = Parent;
         rtm = new ResulSetTableModel();
         rtm.setHostURL();
         rtm.setQuery("Execute spGetalltbl_Class");
+        Evt = "Add";
+        this.model = cbm.ComboboxModel("AgeGroup", "tbl_AgeGroup");
         initComponents();
     }
 
@@ -187,18 +202,20 @@ public class frmAddOrEditClassList extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Add of the Class"));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel2.setText("Class name :");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel3.setText("Age group :");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel4.setText("Note :");
 
         txtNote.setColumns(20);
         txtNote.setRows(5);
         jScrollPane2.setViewportView(txtNote);
+
+        cbAgeGroup.setModel(new DefaultComboBoxModel(model));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -291,6 +308,7 @@ public class frmAddOrEditClassList extends javax.swing.JPanel {
         // TODO add your handling code here:
         Event("Add");
         getDataSource();
+        Evt = "Add";
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
@@ -313,23 +331,31 @@ public class frmAddOrEditClassList extends javax.swing.JPanel {
     private void Event(String evt) {
         if (evt.equals("Delete")) {
             if ((tbClasslist.getSelectedRow()) != -1) {
-
-                int i = CreateOptionDialog("Are you sure want delete this Activite ?", "Delete Activite - Child Care");
-
-                if (i == 1) {
-                    // TODO add your handling code here:
+                ClassCode = Integer.parseInt(tbClasslist.getValueAt(tbClasslist.getSelectedRow(), 0).toString());
+                int i = CreateOptionDialog("Are you sure want delete this Class ?", "Delete Class - Child Care");
+                if (i == 0) {
+                    classbl = new ClassBL(evt, ClassCode);
+                    classbl.setStatement();
+                    classbl.ExecuteSQLProc();
+                    Evt = "Add";
+                    setText(Evt);
                 }
             } else {
-                CreateWarningDialog("Please select activite you want delete !", "Warning - Child Care");
+                CreateWarningDialog("Please select Class you want delete !", "Warning - Child Care");
             }
         } else if (evt.equals("Edit")) {
             if ((tbClasslist.getSelectedRow()) != -1) {
-                //
+                Evt = evt;
+                setText(evt);
             } else {
                 CreateWarningDialog("Please select Class you want edit !", "Warning - Child Care");
             }
         } else if (evt.equals("Add")) {
-            //
+            getText(Evt);
+            classbl = new ClassBL(Evt, ClassCode, ClassName, AgeGroup, Note);
+            classbl.setStatement();
+            classbl.ExecuteSQLProc();
+            setText(evt);
         } else if (evt.equals("Search")) {
             // TODO add your handling code here:
             if ((txtSearch.getText().equals("")) || (txtSearch.getText() == null)) {
@@ -386,5 +412,36 @@ public class frmAddOrEditClassList extends javax.swing.JPanel {
         rtm.setHostURL();
         rtm.setQuery("Execute spGetalltbl_Class");
         tbClasslist.setModel(rtm);
+    }
+
+    private void getText(String evt) {
+        ClassName = txtClassName.getText();
+        AgeGroup = cbAgeGroup.getSelectedIndex() + 1;
+        Note = txtNote.getText();
+        txtClassName.setEditable(false);
+    }
+
+    private void setText(String evt) {
+        if (evt.equals("Edit")) {
+
+            ClassCode = Integer.parseInt(tbClasslist.getValueAt(tbClasslist.getSelectedRow(), 0).toString());
+            System.out.println("ClassCode " + ClassCode);
+            String className = tbClasslist.getValueAt(tbClasslist.getSelectedRow(), 1).toString();
+            int ageGroup = Integer.parseInt(tbClasslist.getValueAt(tbClasslist.getSelectedRow(), 2).toString());
+            String note = tbClasslist.getValueAt(tbClasslist.getSelectedRow(), 4).toString();
+
+            txtClassName.setText(className);
+            cbAgeGroup.setSelectedIndex(ageGroup - 1);
+            txtNote.setText(note);
+            txtClassName.setEditable(false);
+
+        } else if (evt.equals("Add")) {
+
+            txtClassName.setText("");
+            cbAgeGroup.setSelectedIndex(0);
+            txtNote.setText("");
+            txtClassName.setEditable(true);
+
+        }
     }
 }
