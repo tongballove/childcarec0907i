@@ -69,6 +69,7 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
 
     public frmAddOrEditChild(String title, int Code, RightPanel rihtpanel) {
         Title = title;
+        cbm = new ResultSetComboboxModel();
         this.model = cbm.ComboboxModel("AgeGroup", "tbl_AgeGroup");
         ChildCode = Code;
         initComponents();
