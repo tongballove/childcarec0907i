@@ -92,6 +92,17 @@ public class UserBL {
         return Result;
     }
 
+    public void ChengePassword(int userCode, String passWord) {
+        this.sql = "Execute spChangePassword " + userCode + ", '" + passWord + "' ";
+        Record = connec.ExecuteSQLUpdate(sql);
+        message = "Chenge Password succesfully!";
+        if (Record != 0) {
+            JOptionPane.showMessageDialog(null, message);
+        } else {
+            JOptionPane.showMessageDialog(null, "Do not can change this Password of Account!");
+        }
+    }
+
     public int getRecord() {
         return Record;
     }

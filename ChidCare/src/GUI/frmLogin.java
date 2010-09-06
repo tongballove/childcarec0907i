@@ -257,20 +257,17 @@ public class frmLogin extends javax.swing.JDialog {
         try {
             username = txtUsername.getText();
             password = MD5Password.getEncodedPassword(spassword);
-//            //Creating on connection JDBC type 4
-//            if (txtDescription.getSelectedItem().equals("Administrator")) {
-//                logIsAdmin = true;
+
             try {
-//                @SuppressWarnings("static-access")
                 MyConnection cnn = null;
                 ResultSet rs = null;
                 cnn = new MyConnection();
                 if (cnn != null) {
-                    loginbl = new LoginBL(username, "123456");
+                    loginbl = new LoginBL(username, password);
                     rs = loginbl.getResult();
                     if (rs.next()) {
                         this.setVisible(false);
-                        frmMainFrame mn = new frmMainFrame(rs.getString("FullName"), rs.getString("Account"), rs.getString("Phone"), rs.getString("Email"), rs.getString("Address"), rs.getBoolean("Admin"));
+                        frmMainFrame mn = new frmMainFrame(rs.getInt("UserCode"),rs.getString("Password"),rs.getString("FullName"), rs.getString("Account"), rs.getString("Phone"), rs.getString("Email"), rs.getString("Address"), rs.getBoolean("Admin"));
                         mn.setVisible(true);
                         this.dispose();
                     } else {

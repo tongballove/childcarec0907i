@@ -11,8 +11,10 @@
 package GUI;
 
 import BL.UserBL;
+import GUI.Component.MD5Password;
 import GUI.Component.RightPanel;
 import java.awt.Font;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -530,7 +532,12 @@ public class frmAddOrEditUser extends javax.swing.JPanel {
 
     private void getText() {
         Username = txtUserName.getText();
-        Password = new String(txtPass.getPassword());
+        try {
+            Password = MD5Password.getEncodedPassword(new String(txtPass.getPassword()));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(frmAddOrEditUser.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
         Comfirmpass = new String(txtComfirmPass.getPassword());
         FullName = txtFullName.getText();
         Phone = txtPhoneNumber.getText();
