@@ -6,7 +6,6 @@ package BL;
 
 import DAL.MyConnection;
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 
 /**
  *
