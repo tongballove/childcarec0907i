@@ -51,7 +51,7 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
     private String DateReceived;
     private String ParentEmailAddress;
     private final String Title;
-    private ResultSetComboboxModel cbm = new ResultSetComboboxModel();
+    private ResultSetComboboxModel cbm;
     private String[] model;
     private ChildBL childbl;
     private RightPanel RightPanel;
@@ -59,6 +59,7 @@ public class frmAddOrEditChild extends javax.swing.JPanel {
     /** Creates new form frmChildList */
     public frmAddOrEditChild(String title, RightPanel rihtpanel) {
         Title = title;
+        cbm = new ResultSetComboboxModel();
         this.model = cbm.ComboboxModel("AgeGroup", "tbl_AgeGroup");
         initComponents();
         plTable.setBorder(BorderFactory.createTitledBorder(null, Title + " of the Children", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Times New Roman", 1, 17)));
