@@ -72,6 +72,7 @@ GO
 CREATE TABLE tbl_Nanny(
 	NannyCode int  primary key identity(1,1) NOT NULL,
 	ClassCode int foreign key references tbl_Class(ClassCode),
+	ChildCode int foreign key references tbl_Child(ChildCode),--
 	[Name] varchar(50),--/---
 	YearOfBirth Datetime,
 	Sex bit,
@@ -80,7 +81,6 @@ CREATE TABLE tbl_Nanny(
 	Mail varchar(50) NOT NULL,
 	Charge Money,
 	WorkingHours int,
-	ChildCode int foreign key references tbl_Child(ChildCode),--
 	Status Bit NULL DEFAULT 1,
 )
 GO
@@ -91,13 +91,12 @@ CREATE TABLE tbl_Activities(
 	Status Bit NULL DEFAULT 1,
 )
 GO
-CREATE TABLE tbl_Active_AgeGroup(
+CREATE TABLE tbl_Active_Class(
 	
-	GroupAgeCode int foreign key references tbl_AgeGroup (GroupAgeCode ) NOT NULL,
+	ClassCode int foreign key references tbl_Class (ClassCode) NOT NULL,
 	ActiveCode int foreign key references tbl_Activities(ActiveCode) NOT NULL,
-	ActiveGroupCode int identity(1,1) NOT NULL,
 	Status Bit NULL DEFAULT 1,
-	primary key (GroupAgeCode,ActiveCode),
+	primary key (ClassCode,ActiveCode)
 )
 GO
 
